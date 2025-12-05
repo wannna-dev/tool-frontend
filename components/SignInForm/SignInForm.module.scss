@@ -1,0 +1,10 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-4);
+    max-width: 385px;
+    width: 90%;
+    margin: 0 auto;
+}

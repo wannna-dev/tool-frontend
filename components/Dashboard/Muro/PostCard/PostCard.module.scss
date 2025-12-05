@@ -1,0 +1,58 @@
+.postCard {
+    max-width: var(--max-width-container);
+    width: 100%;
+    margin: 0 auto;
+
+    // background-color: var(--color-gray-light);
+    padding: var(--space-4);
+    border-radius: var(--border-radius-small);
+
+    &:hover {
+        background-color: var(--color-gray-light);
+    }
+
+    &__header {
+        
+        margin-bottom: var(--space-4);
+        width: fit-content;
+
+        border-radius: var(--border-radius);
+        padding: var(--space-2) 0;
+
+        transition: all 0.3s ease;
+
+        cursor: pointer;
+        
+        &:hover {
+            padding: var(--space-2) var(--space-4);
+            background-color: var(--color-white);
+        }
+
+        &__username {
+            text-decoration: none;
+            color: var(--color-black);
+            display: flex;
+            justify-content: flex-start;
+            gap: var(--space-2);
+            align-items: center;
+        }
+
+        &__avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: var(--color-gray-dark);
+        }
+
+        &__createdAt {
+            font-size: var(--font-size-sm);
+            color: var(--color-gray-dark);
+        }
+    }
+
+    &__content {
+        font-size: var(--font-size-xl);
+        font-weight: 400;
+        color: var(--color-text-primary);
+    }
+}
