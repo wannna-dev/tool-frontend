@@ -16,7 +16,7 @@ import { useEffect } from "react";
 // types
 import { UserType } from "@/types/user";
 
-const Dashboard = ({user, usernameProfile, pageType}: {user?: UserType, usernameProfile?: string, pageType?: "muro" | "perfil" | "chat"}) => {
+const Dashboard = ({user, usernameProfile, pageType, token}: {user?: UserType, usernameProfile?: string, pageType?: "muro" | "perfil" | "chat", token?: string}) => {
 
     const {
         screen,
@@ -25,12 +25,19 @@ const Dashboard = ({user, usernameProfile, pageType}: {user?: UserType, username
         setIsSidebarRightOpen,
         isSidebarRightOpen,
         setUsernameProfile,
-        setUser
+        setUser,
+        setToken
     } = useAppContext();
 
     useEffect(() => {
         setScreen("muro");
     }, []);
+
+    useEffect(() => {
+        if (token) {
+            setToken(token as string);
+        }
+    }, [token]);
 
     useEffect(() => {
         if (user) {

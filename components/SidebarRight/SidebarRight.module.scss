@@ -1,5 +1,5 @@
 .sidebar {
-    width: 380px;
+    width: 520px;
     height: 100vh;
     border-left: 1px solid var(--color-divider);
     display: flex;
@@ -16,10 +16,18 @@
 
     &__header {
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
         align-items: center;
+        margin-bottom: var(--space-4);
 
-        &__logo {
+        &__title {
+            &__text {
+                font-size: var(--font-size-md);
+                color: var(--color-gray-dark);
+            }
+        }
+
+        &__close {
             &__button {
                 cursor: pointer;
             }

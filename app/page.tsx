@@ -17,13 +17,14 @@ export default async function Home() {
   if (username && isLoggedIn) {
     user = await apiFetch(`/users/${username}`, {
       token, // se añade al header Authorization
+      method: "GET",
     });
   }
 
   return (
     <div className={styles.page}>
       {/* {isLoggedIn ? <Presentation /> : <Login />} */}
-      {isLoggedIn ? <Dashboard user={user} /> : <Login />}
+      {isLoggedIn ? <Dashboard user={user} token={token} /> : <Login />}
     </div>
   );
 }

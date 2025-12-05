@@ -13,6 +13,8 @@ interface AppContextType {
     setUsernameProfile: (usernameProfile: string) => void;
     user: UserType | null;
     setUser: (user: UserType | null) => void;
+    token: string | null;
+    setToken: (token: string | null) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -26,6 +28,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const [isSidebarLeftOpen, setIsSidebarLeftOpen] = useState(true);
     const [usernameProfile, setUsernameProfile] = useState<string>("");
     const [user, setUser] = useState<UserType | null>(null);
+    const [token, setToken] = useState<string | null>(null);
     return (
         <AppContext.Provider value={{
             screen,
@@ -37,7 +40,9 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
             usernameProfile,
             setUsernameProfile,
             user,
-            setUser
+            setUser,
+            token,
+            setToken
         }}>
             {children}
         </AppContext.Provider>

@@ -7,6 +7,8 @@ interface FetchOptions extends RequestInit {
 export async function apiFetch(endpoint: string, options: FetchOptions = {}) {
     const { token, body, ...rest } = options;
 
+    console.log(body)
+
     const headers: HeadersInit = {
         "Content-Type": "application/json",
         ...(token ? { "Authorization": `Bearer ${token}` } : {})
@@ -18,6 +20,8 @@ export async function apiFetch(endpoint: string, options: FetchOptions = {}) {
         body: body ? body : undefined,
         ...rest,
     });
+
+    console.log(res)
 
     if (!res.ok) {
         const err = await res.json().catch(() => ({}));
