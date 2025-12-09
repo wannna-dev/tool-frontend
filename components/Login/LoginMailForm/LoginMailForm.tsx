@@ -44,17 +44,17 @@ const LoginMailForm = () => {
       {isEmailFormOpen ? (
         <form className={styles.login__form} onSubmit={handleSubmit}>
           <input type="email" name="email" placeholder="Email" />
-          <button type="submit">Login</button>
+          <button type="submit">Continuar</button>
         </form>
       ) : (
-      <button
-          className={styles.login__label}
-          data-variant="secondary"
-          onClick={handleLabelClick}
-        >
-          <Image src="/svg/message.svg" alt="Email" width={20} height={20} />
-          Continuar con correo electrónico
-      </button>
+        <button
+            className={styles.login__label}
+            data-variant="secondary"
+            onClick={handleLabelClick}
+          >
+            <Image src="/svg/message.svg" alt="Email" width={20} height={20} />
+            Continuar con correo electrónico
+        </button>
       )}
     </div>
   );
