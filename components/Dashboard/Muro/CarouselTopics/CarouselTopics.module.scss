@@ -1,0 +1,33 @@
+.carousel {
+  margin-bottom: var(--space-4);
+
+  &__swiper {
+    width: 100%;
+    height: 100%;
+    
+    &__slide {
+      width: 25% !important;
+      height: auto;
+      aspect-ratio: var(--aspect-ratio-small);
+      border-radius: var(--border-radius-small);
+      background-color: var(--color-gray-light);
+      padding: var(--space-5);
+
+      &__content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+
+      &__text {
+        font-size: var(--font-size-3xl);
+        line-height: var(--line-height-small);
+        font-weight: 800;
+      }
+    }
+
+  }
+}

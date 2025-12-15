@@ -1,0 +1,7 @@
+.container {
+  display: flex;
+  height: 100svh; // same as h-svh in Tailwind
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}

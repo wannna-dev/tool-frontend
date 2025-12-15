@@ -68,7 +68,10 @@
                     width: 32px;
                     height: 32px;
                     border-radius: 50%;
-                    background-color: var(--color-gray-dark);
+                    /* background-color: var(--color-gray-dark); */
+                    background-size: cover;
+                    background-position: center;
+                    background-repeat: no-repeat;
                     transition: width 0.3s ease, height 0.3s ease;
                     &__collapse {
                         width: 19px;

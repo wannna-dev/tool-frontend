@@ -3,18 +3,60 @@
     
     padding: var(--space-12) 0;
     width: 100%;
-    height: 100dvh;
+    /* height: 100dvh; */
     overflow-y: scroll;
     
     &__container {
-        max-width: var(--max-width-container);
         width: 95%;
         margin: 0 auto;
+        max-width: var(--max-width-container-xxl);
+    }
+    
+    &__carouselTopics {
+        margin-bottom: var(--space-12);
     }
 
-    &__posts {
+    &__content {
+
+        position: relative;
+        width: 100%;
+        height: 100%;
+
         display: flex;
-        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
         gap: var(--space-4);
+
+        &__posts {
+            width: 70%;
+            max-width: var(--max-width-container);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+    
+            &__divider {
+                width: 100%;
+                height: 1px;
+                background-color: var(--color-divider);
+                margin: var(--space-4) 0;
+            }
+        }
+
+        &__questions {
+            position: sticky;
+            top: 0;
+            width: 30%;
+            max-width: var(--max-width-container);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+
+        }
+        
+        &__title {
+            color: var(--color-gray-dark);
+            margin-bottom: var(--space-2);
+        }
     }
+    
 }

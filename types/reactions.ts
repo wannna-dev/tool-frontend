@@ -1,0 +1,1 @@
+export type ReactionType = 'me_identifico' | 'me_emociona' | 'me_enseno' | 'me_alegra';

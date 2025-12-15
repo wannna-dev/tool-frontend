@@ -2,39 +2,26 @@
 
 import styles from "./LoginMailForm.module.scss";
 import { useState } from "react";
+import { useFormState, useFormStatus } from "react-dom";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { apiFetch } from "@/lib/api";
 import Image from "next/image";
+import { signInWithEmail } from "@/lib/auth-actions";
 
-const LoginMailForm = () => {
+const LoginMailForm = ({ handleMailClick }: { handleMailClick: () => void }) => {
   const router = useRouter();
 
   const [isEmailFormOpen, setIsEmailFormOpen] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const formData = new FormData(e.target as HTMLFormElement);
-    const email = formData.get("email") as string;
-
-    try {
-      const res = await apiFetch("/auth/magic-link/send", {
-        method: "SEND",
-        body: JSON.stringify({
-          email,
-          firstName: "",
-          lastName: "",
-        }),
-      });
-      console.log(res);
-    } catch (error) {
-      console.error("Error logging in:", error);
-    }
-  }
-
   function handleLabelClick() {
     console.log("handleLabelClick");
     setIsEmailFormOpen(true);
+    handleMailClick();
+  }
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    await signInWithEmail(formData);
   }
   
   return (
@@ -44,6 +31,7 @@ const LoginMailForm = () => {
       {isEmailFormOpen ? (
         <form className={styles.login__form} onSubmit={handleSubmit}>
           <input type="email" name="email" placeholder="Email" />
+          <input type="password" name="password" placeholder="Password" />
           <button type="submit">Continuar</button>
         </form>
       ) : (

@@ -1,26 +1,32 @@
 "use client";
 import styles from "./Presentation.module.scss";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import Header from "@/components/Header/Header";
+import { UserType } from "@/types/user";
+import { createClient } from "@/utils/supabase/client";
 
-type CardType = "name" | "birthday" | "location" | "bio";
+
+type CardType = "name" | "username" | "birthday" | "location" | "bio" | "image";
 
 interface CardProps {
     type: CardType;
-    value?: any;
-    setValue?: (val: any) => void;
+    value?: string;
+    setValue?: (val: string) => void;
     day?: number | "";
     month?: number | "";
     year?: number | "";
     location?: string | "";
     bio?: string | "";
+    image?: string | "";
+    setImage?: (val: string) => void;
     setLocation?: (val: string) => void;
     setBio?: (val: string) => void;
     setDay?: (val: number | "") => void;
     setMonth?: (val: number | "") => void;
     setYear?: (val: number | "") => void;
     handleNext: () => void;
+    setImageFile?: (val: File | null) => void;
 }
 
 
@@ -33,13 +39,19 @@ const Card = ({
     year,
     location,
     bio,
+    image,
+    setImage,
     setBio,
     setLocation,
     setDay,
     setMonth,
     setYear,
+    setImageFile,
     handleNext
 }: CardProps) => {
+
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -64,6 +76,33 @@ const Card = ({
                                 required
                             />
                             <button type="submit" data-type="primary" className={`${styles.card__button}`} disabled={!value}>
+                                <Image src="/svg/arrow-right-white.svg" alt="Arrow Right" width={24} height={24} />
+                            </button>
+                        </div>
+                    </>
+                )}
+
+                {/* STEP 2 - USERNAME */}
+                {type === "username" && (
+                    <>
+                        <h1 className={styles.card__content__title}>¿Cual quieres que sea tu username?</h1>
+                        <div className={styles.card__content__inputs}>
+                            <input
+                                type="text"
+                                value={value}
+                                onChange={(e) => {
+                                    const sanitized = e.target.value.replace(/\s+/g, "");
+                                    setValue?.(sanitized);
+                                }}
+                                placeholder="Escribe tu username"
+                                required
+                            />
+                            <button
+                                type="submit"
+                                data-type="primary"
+                                className={styles.card__button}
+                                disabled={!value}
+                            >
                                 <Image src="/svg/arrow-right-white.svg" alt="Arrow Right" width={24} height={24} />
                             </button>
                         </div>
@@ -164,26 +203,144 @@ const Card = ({
                     </>
                 )}
 
+                {/* STEP 5 - IMAGE */}
+                {type === "image" && (
+                    <>
+                        <h1 className={styles.card__content__title}>¿Cuál es tu imagen de perfil?</h1>
+                        <div className={styles.card__content__inputs}>
+                            {/* Hidden file input */}
+                            <input 
+                                ref={fileInputRef}
+                                type="file" 
+                                accept="image/*"
+                                style={{ display: 'none' }}
+                                onChange={(e) => {
+                                    const file = e.target.files?.[0];
+                                    if (file) {
+                                        setImageFile?.(file);
+                                        setImage?.(URL.createObjectURL(file));
+                                        // Create preview URL
+                                        const previewUrl = URL.createObjectURL(file);
+                                        setImagePreview?.(previewUrl);
+                                    }
+                                }} 
+                            />
+                            
+                            {/* Clickable image preview */}
+                            <div 
+                                onClick={() => fileInputRef.current?.click()}
+                                className={styles.card__content__inputs__image}
+                            >
+                                {imagePreview ? (
+                                    <Image 
+                                        src={imagePreview} 
+                                        alt="Preview" 
+                                        width={500}
+                                        height={500}
+                                        style={{
+                                            objectFit: 'cover'
+                                        }}
+                                    />
+                                ) : (
+                                    <span style={{ color: '#999', textAlign: 'center' }}>
+                                        Click para<br/>seleccionar imagen
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+                        <button 
+                            type="submit" 
+                            data-type="primary" 
+                            className={styles.card__button} 
+                            disabled={!image}
+                        >
+                            <Image src="/svg/arrow-right-white.svg" alt="Arrow Right" width={24} height={24} />
+                        </button>
+                    </>
+                )}
+
             </div>
         </form>
     );
 };
 
 
-const Presentation = () => {
+const Presentation = ({ user }: { user: UserType }) => {
     const [step, setStep] = useState(1);
 
     // Individual states
-    const [name, setName] = useState("");
-    const [bio, setBio] = useState("");
-    const [location, setLocation] = useState("");
+    const [name, setName] = useState(user?.full_name);
+    const [bio, setBio] = useState(user?.bio);
+    const [location, setLocation] = useState(user?.location);
+    const [username, setUsername] = useState(user?.username);
+    const [image, setImage] = useState(user?.picture);
+    const [imageFile, setImageFile] = useState<File | null>(null);
 
     const [day, setDay] = useState<number | "">("");
     const [month, setMonth] = useState<number | "">("");
     const [year, setYear] = useState<number | "">("");
 
-    const handleNext = () => {
+    const handleNext = async () => {
+        // If it's the LAST step → update profile
+        if (step === 6) {
+
+            let uploadedImageUrl = image;
+
+            if (image) {
+                // upload to s3
+                const formData = new FormData();
+                formData.append("file", imageFile as File);
+                formData.append("folder", "profiles");
+                const res = await fetch("/api/s3-upload", {
+                    method: "POST",
+                    body: formData
+                });
+                const data = await res.json();
+                console.log("🚀 data:", data);
+                if (data.success) {
+                    uploadedImageUrl = data.url;
+                } else {
+                    console.error("❌ Error uploading image:", data.error);
+                    return;
+                }
+            }
+
+            // upload to supabase storage
+            const supabase = createClient();
+            const date_of_birth =
+                year && month && day
+                    ? `${year.toString().padStart(4, "0")}-${month
+                        .toString()
+                        .padStart(2, "0")}-${day
+                        .toString()
+                        .padStart(2, "0")}`
+                    : null;
+
+            const { error } = await supabase
+                .from("profiles")
+                .update({
+                    full_name: name,
+                    bio: bio,
+                    location: location,
+                    date_of_birth: date_of_birth,
+                    username: username,
+                    picture: uploadedImageUrl,
+                })
+                .eq("id", user.id);
+
+            if (error) {
+                console.error("❌ Error updating profile:", error);
+                return;
+            }
+
+            console.log("✅ Profile updated!");
+
+            // OPTIONAL: redirect to dashboard
+            window.location.href = "/";
+            return;
+        }
         setStep((prev) => prev + 1);
+
     };
 
     return (
@@ -200,8 +357,18 @@ const Presentation = () => {
                 />
             )}
 
-            {/* STEP 2 - BIRTHDAY */}
+            {/* STEP 2 - USERNAME */}
             {step === 2 && (
+                <Card
+                    type="username"
+                    value={username}
+                    setValue={setUsername}
+                    handleNext={handleNext}
+                />
+            )}
+
+            {/* STEP 2 - BIRTHDAY */}
+            {step === 3 && (
                 <Card
                     type="birthday"
                     value={name} // para mostrar "Encantado, X"
@@ -215,8 +382,8 @@ const Presentation = () => {
                 />
             )}
 
-            {/* STEP 3 - LOCATION */}
-            {step === 3 && (
+            {/* STEP 4 - LOCATION */}
+            {step === 4 && (
                 <Card
                     type="location"
                     location={location}
@@ -225,8 +392,8 @@ const Presentation = () => {
                 />
             )}
 
-            {/* STEP 4 - BIO */}
-            {step === 4 && (
+            {/* STEP 5 - BIO */}
+            {step === 5 && (
                 <Card
                     type="bio"
                     bio={bio}
@@ -235,7 +402,20 @@ const Presentation = () => {
                 />
             )}
 
-            <Image className={styles.presentation__image} src="/images/presentation.png" alt="Presentation" width={382} height={382} />
+            {/* STEP 6 - IMAGE */}
+            {step === 6 && (
+                <Card
+                    type="image"
+                    image={image}
+                    setImage={setImage}
+                    setImageFile={setImageFile}
+                    handleNext={handleNext}
+                />
+            )}
+
+            {step !== 6 && (
+                <Image className={styles.presentation__image} src="/images/presentation.png" alt="Presentation" width={382} height={382} />
+            )}
 
         </div>
     );

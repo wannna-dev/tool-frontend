@@ -1,0 +1,12 @@
+.newpost {
+  margin: 0 auto;
+  padding: var(--space-12) 0;
+  width: 100%;
+  overflow-y: scroll;
+
+  &__container {
+    width: 95%;
+    margin: 0 auto;
+    max-width: var(--max-width-container);
+  }
+}

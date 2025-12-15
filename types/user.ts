@@ -1,7 +1,11 @@
-import { Post } from "./post";
 export interface UserType {
   id: string;
+  avatar_url: string;
+  email: string;
+  full_name: string;
   username: string;
-  description: string;
-  posts: Post[];
+  bio: string;
+  date_of_birth: string;
+  location: string;
+  picture: string;
 }

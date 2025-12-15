@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.scss";
 import { AppProvider } from "@/context/AppContext";
+import { AuthHandler } from "./auth-handler";
 
 
 // Diatype Expanded Font
@@ -52,6 +53,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${diatypeSemiMonoFont.variable} ${diaypeExpandedFont.variable}`}>
         <AppProvider>
+          <AuthHandler />
           {children}
         </AppProvider>
       </body>

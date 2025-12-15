@@ -3,10 +3,11 @@ import { useState, useRef } from "react";
 import { useAppContext } from "@/context/AppContext";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { createClient } from "@/utils/supabase/client";
 
 const UploadPost = () => {
     const router = useRouter();
-    const { setIsSidebarRightOpen } = useAppContext();
+    const { setIsSidebarRightOpen, user } = useAppContext();
     // States
     const [content, setContent] = useState("");
     const [file, setFile] = useState<File | null>(null);
@@ -41,25 +42,52 @@ const UploadPost = () => {
         }
     };
 
-    const handleUploadPost = async () => {
-        const res = await fetch("/api/upload-post", {
+    const handleUploadPost = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        if (!user || !title || !description || !file) {
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("file", file as File);
+        formData.append("folder", "posts");
+        const res = await fetch("/api/s3-upload", {
             method: "POST",
-            body: JSON.stringify({ content }),
+            body: formData,
         });
         const data = await res.json();
-        if (data) {
-            setContent("");
-            setIsSidebarRightOpen(false);
-            router.push("/");
-        } else {
+
+        if (!data.success) {
             console.error(data.error);
+            return;
         }
+
+        const supabase = createClient();
+        const { error } = await supabase.from("posts").insert({
+            image: data.url,
+            title: title,
+            description: description,
+            user_id: user?.id,
+        });
+
+        if (error) {
+            console.error(error);
+            return;
+        }
+
+        setContent("");
+        setTitle("");
+        setDescription("");
+        setFile(null);
+        setIsSidebarRightOpen(false);
+        router.push("/");
     }
 
     return (
         <div className={styles.uploadPost}>
 
-            <form className={styles.uploadPost__form} onSubmit={handleUploadPost}>
+            <form className={styles.uploadPost__form} onSubmit={(e) => handleUploadPost(e)}>
                 {/* Image */}
                 <div
                     className={`${styles.uploadPost__form__image} ${file ? styles.uploadPost__imageSelected : ""}`}
@@ -113,7 +141,7 @@ const UploadPost = () => {
                 </div>
 
                 {/* Button */}
-                <button className={styles.uploadPost__form__button} type="submit" data-variant="primary" onClick={handleUploadPost}>Publicar</button>
+                <button className={styles.uploadPost__form__button} type="submit" data-variant="primary">Publicar</button>
             </form>
 
         </div>

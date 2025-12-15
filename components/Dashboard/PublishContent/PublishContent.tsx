@@ -1,0 +1,67 @@
+"use client";
+import styles from "./PublishContent.module.scss";
+import Image from "next/image";
+import { useState } from "react";
+
+// components
+import Note from "./Note/Note";
+// import Post from "./Post/Post";
+import Question from "./Question/Question";
+
+import { useAppContext } from "@/context/AppContext";
+
+type TabType = "" | "note" | "post" | "question";
+
+const PublishContent = () => {
+
+  const { setScreen } = useAppContext();
+  const [isOpen, setIsOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<TabType>("");
+
+  const handleTabChange = (tab: TabType) => {
+    if (tab === "post") {
+      setScreen("post");
+    } else {
+      setActiveTab(tab);
+      setIsOpen(false);
+    }
+    setActiveTab(tab);
+    setIsOpen(false);
+  };
+    
+
+  return (
+    <>
+      <div className={styles.publish}>
+        <button className={styles.publish__button} id="publish-content-button" onClick={() => setIsOpen(!isOpen)}>
+          Publicar
+          <Image src="/svg/plus-white.svg" alt="plus" width={12} height={12} />
+        </button>
+
+        {isOpen && (
+          <div className={styles.publish__selector}>
+            <button className={styles.publish__selector__button} data-variant="icon" onClick={() => handleTabChange("note")}>
+              <Image src="/svg/note.svg" alt="note" width={15} height={15} />
+              Nota
+            </button>
+            <button className={styles.publish__selector__button} data-variant="icon" onClick={() => handleTabChange("post")}>
+              <Image src="/svg/post.svg" alt="post" width={15} height={15} />
+              Post
+            </button>
+            <button className={styles.publish__selector__button} data-variant="icon" onClick={() => handleTabChange("question")}>
+              <Image src="/svg/question.svg" alt="question" width={15} height={15} />
+              Pregunta
+            </button>
+          </div>
+        )}
+      </div>
+
+      {activeTab === "note" && <Note handleTabChange={handleTabChange} />}
+      {/* {activeTab === "post" && <Post />} */}
+      {activeTab === "question" && <Question handleTabChange={handleTabChange} />}
+    </>
+  );
+};
+
+
+export default PublishContent;

@@ -2,9 +2,15 @@
 import { UserType } from "@/types/user";
 import { createContext, useContext, useState, useEffect } from "react";
 
+type ToastState = {
+    show: boolean;
+    message: string;
+    type: "success" | "error" | "info";
+  };
+
 interface AppContextType {
-    screen: "muro" | "perfil" | "chat";
-    setScreen: (screen: "muro" | "perfil" | "chat") => void;
+    screen: "muro" | "perfil" | "chat" | "post";
+    setScreen: (screen: "muro" | "perfil" | "chat" | "post") => void;
     isSidebarRightOpen: boolean;
     setIsSidebarRightOpen: (isSidebarRightOpen: boolean) => void;
     isSidebarLeftOpen: boolean;
@@ -15,13 +21,15 @@ interface AppContextType {
     setUser: (user: UserType | null) => void;
     token: string | null;
     setToken: (token: string | null) => void;
+    toast: ToastState;
+    setToast: (toast: ToastState) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     // state
-    const [screen, setScreen] = useState<"muro" | "perfil" | "chat">("muro");
+    const [screen, setScreen] = useState<"muro" | "perfil" | "chat" | "post">("muro");
     
     // sidebars states
     const [isSidebarRightOpen, setIsSidebarRightOpen] = useState(false);
@@ -29,6 +37,11 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     const [usernameProfile, setUsernameProfile] = useState<string>("");
     const [user, setUser] = useState<UserType | null>(null);
     const [token, setToken] = useState<string | null>(null);
+    const [toast, setToast] = useState<ToastState>({
+        show: false,
+        message: '',
+        type: "success",
+    });
     return (
         <AppContext.Provider value={{
             screen,
@@ -42,7 +55,9 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
             user,
             setUser,
             token,
-            setToken
+            setToken,
+            toast,
+            setToast,
         }}>
             {children}
         </AppContext.Provider>

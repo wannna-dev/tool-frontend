@@ -11,6 +11,9 @@
   --color-error: #F45B5B;
   --color-success: #4DCD69;
   --color-divider: #E8EBF1;
+  --color-emociona: #3C66F5;
+  --color-enseno: #0DEAF5;
+  --color-alegra: #E8E807;
 
   // typography
   --font-family-base: diatypeSemiMonoFont;
@@ -71,6 +74,7 @@
 
   // aspect ratios
   --aspect-ratio: 4 / 3;
+  --aspect-ratio-small: 16 / 9;
 
 }
 
@@ -194,5 +198,21 @@ button {
     border: none;
     color: var(--color-black);
     width: fit-content;
+  }
+
+  &[data-variant="nav"] {
+    background-color: transparent;
+    border: none;
+  }
+
+  &[data-variant="dropdown"] {
+    background-color: var(--color-gray-light);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--space-4);
+    width: fit-content;
+    color: var(--color-black);
   }
 }
