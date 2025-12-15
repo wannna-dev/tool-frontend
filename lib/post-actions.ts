@@ -74,7 +74,7 @@ export async function getPosts() {
   @param content - The content of the post
   @returns {Promise<{error: string, success: boolean, post: PostType}>} - The result of the create post
 */
-export async function createPost(title: string, content: string) {
+export async function createPost(title: string, content: string, image: string) {
   const supabase = await createClient();
 
   const {
@@ -100,7 +100,7 @@ export async function createPost(title: string, content: string) {
   
   const { data, error } = await supabase
     .from("posts")
-    .insert({ title, description: content, user_id: user.id })
+    .insert({ title, description: content, user_id: user.id, image: image })
     .select()
     .single();
 
