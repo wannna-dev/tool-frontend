@@ -25,6 +25,14 @@ const diatypeSemiMonoFont = localFont({
   display: "swap",
 });
 
+const diatypeBoldTrialFont = localFont({
+  src: [
+    { path: "./fonts/ABCDiatype-Bold-Trial.otf" },
+  ],
+  variable: "--font-diatype-bold-trial",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "WANNA",
   description: "The largest collection of human experiences.",
@@ -51,7 +59,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${diatypeSemiMonoFont.variable} ${diaypeExpandedFont.variable}`}>
+      <body className={`${diatypeSemiMonoFont.variable} ${diaypeExpandedFont.variable} ${diatypeBoldTrialFont.variable}`}>
         <AppProvider>
           <AuthHandler />
           {children}

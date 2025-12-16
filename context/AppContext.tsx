@@ -1,6 +1,7 @@
 "use client";
 import { UserType } from "@/types/user";
 import { createContext, useContext, useState, useEffect } from "react";
+import { MoodType } from "@/types/mood";
 
 type ToastState = {
     show: boolean;
@@ -9,8 +10,8 @@ type ToastState = {
   };
 
 interface AppContextType {
-    screen: "muro" | "perfil" | "chat" | "post";
-    setScreen: (screen: "muro" | "perfil" | "chat" | "post") => void;
+    screen: "muro" | "perfil" | "chat" | "post" | "comunidades";
+    setScreen: (screen: "muro" | "perfil" | "chat" | "post" | "comunidades") => void;
     isSidebarRightOpen: boolean;
     setIsSidebarRightOpen: (isSidebarRightOpen: boolean) => void;
     isSidebarLeftOpen: boolean;
@@ -23,13 +24,15 @@ interface AppContextType {
     setToken: (token: string | null) => void;
     toast: ToastState;
     setToast: (toast: ToastState) => void;
+    mood: MoodType;
+    setMood: (mood: MoodType) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     // state
-    const [screen, setScreen] = useState<"muro" | "perfil" | "chat" | "post">("muro");
+    const [screen, setScreen] = useState<"muro" | "perfil" | "chat" | "post" | "comunidades">("chat");
     
     // sidebars states
     const [isSidebarRightOpen, setIsSidebarRightOpen] = useState(false);
@@ -42,6 +45,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         message: '',
         type: "success",
     });
+    const [mood, setMood] = useState<MoodType>("resueno");
     return (
         <AppContext.Provider value={{
             screen,
@@ -58,6 +62,8 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
             setToken,
             toast,
             setToast,
+            mood,
+            setMood,
         }}>
             {children}
         </AppContext.Provider>

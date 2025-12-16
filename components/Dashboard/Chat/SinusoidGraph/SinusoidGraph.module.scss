@@ -1,0 +1,25 @@
+.sinusoidGraph {
+  width: 70%;
+  height: 200px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.svg {
+  width: 100%;
+  height: 100%;
+}
+
+.gridLine {
+  stroke: rgba(255, 255, 255, 0.2);
+  stroke-width: 1;
+  stroke-dasharray: 5, 5;
+}
+
+.wave1 {
+  fill: none;
+  stroke: var(--color-main);
+  stroke-width: 3;
+  stroke-linecap: round;
+  transition: stroke 0.3s ease;
+}

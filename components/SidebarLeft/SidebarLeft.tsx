@@ -12,19 +12,16 @@ const SidebarItem = memo(({
   active,
   onClick,
   icon,
-  iconSelected,
   isCollapsed
 }: {
   label: string;
   active: boolean;
   onClick: () => void;
   icon: string;
-  iconSelected: string;
   isCollapsed: boolean;
 }) => {
   // Remove unnecessary useMemo - string concatenation is cheap
   const iconSrc = `/svg/${icon}.svg`;
-  const iconSelectedSrc = `/svg/${iconSelected}.svg`;
   
   return (
     <div
@@ -35,7 +32,7 @@ const SidebarItem = memo(({
     >
       <Image 
         className={isCollapsed ? styles.sidebarItem__icon__collapsed : ""} 
-        src={active ? iconSelectedSrc : iconSrc} 
+        src={iconSrc} 
         alt={label} 
         width={19} 
         height={19}
@@ -73,7 +70,7 @@ const SidebarLeft = () => {
   }, [user?.picture]);
 
   // Memoize event handlers to prevent recreating on every render
-  const handleScreen = useCallback((screen: "muro" | "perfil" | "chat") => {
+  const handleScreen = useCallback((screen: "muro" | "perfil" | "chat" | "comunidades") => {
     setScreen(screen);
     setIsSidebarRightOpen(false);
     setIsSettings(false);
@@ -142,7 +139,6 @@ const SidebarLeft = () => {
           active={screen === "chat"} 
           onClick={() => handleScreen("chat")} 
           icon="chat" 
-          iconSelected="chat-selected" 
           isCollapsed={!isSidebarLeftOpen} 
         />
         <SidebarItem 
@@ -150,7 +146,13 @@ const SidebarLeft = () => {
           active={screen === "muro"} 
           onClick={() => handleScreen("muro")} 
           icon="feed" 
-          iconSelected="feed-selected" 
+          isCollapsed={!isSidebarLeftOpen} 
+        />
+        <SidebarItem 
+          label="Comunidades" 
+          active={screen === "comunidades"} 
+          onClick={() => handleScreen("comunidades")} 
+          icon="community" 
           isCollapsed={!isSidebarLeftOpen} 
         />
       </div>
@@ -165,7 +167,6 @@ const SidebarLeft = () => {
               active={screen === "perfil"} 
               onClick={handlePerfil} 
               icon="profile" 
-              iconSelected="profile-selected" 
               isCollapsed={false} 
             />
             <SidebarItem 
@@ -173,7 +174,6 @@ const SidebarLeft = () => {
               active={false} 
               onClick={signout} 
               icon="logout" 
-              iconSelected="logout-selected" 
               isCollapsed={false} 
             />
           </div>

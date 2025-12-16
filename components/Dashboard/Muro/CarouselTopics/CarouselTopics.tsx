@@ -4,7 +4,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/css';
 
 const TOPICS = [
-  { id: 1, name: "Me ha tocado", likes: '1K', color: 'var(--color-main)' },
+  /* { id: 0, name: "Help me!", likes: '1K', color: 'var(--color-black)' }, */
+  { id: 1, name: "Me ha tocado", likes: '1K', color: 'var(--color-resuena)' },
   { id: 2, name: "Sin postureo", likes: '932', color: 'var(--color-enseno)' },
   { id: 3, name: "Esto es útil", likes: '824', color: 'var(--color-emociona)' },
   { id: 4, name: "Freeeesh", likes: '234', color: 'var(--color-alegra)' },

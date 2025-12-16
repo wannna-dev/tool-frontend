@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import Muro from "./Muro/Muro";
 import Perfil from "./Perfil/Perfil";
 import Chat from "./Chat/Chat";
+import Comunidades from "./Comunidades/Comunidades";
 import NewPost from "./NewPost/NewPost";
 
 // components
@@ -14,6 +15,7 @@ import SidebarLeft from "@/components/SidebarLeft/SidebarLeft";
 import SidebarRight from "@/components/SidebarRight/SidebarRight";
 import PublishContent from "./PublishContent/PublishContent";
 import Toast from "./Toast/Toast";
+import BgGradient from "./BgGradient/BgGradient";
 
 // types
 import { UserType } from "@/types/user";
@@ -50,11 +52,13 @@ const Dashboard = ({ userLogged, usernameProfile, pageType }: DashboardProps) =>
 
   return (
     <main className={styles.dashboard}>
+      <BgGradient />
       <SidebarLeft />
       {screen === "muro" && <Muro />}
       {screen === "perfil" && <Perfil usernameProfile={usernameProfile} />}
       {screen === "chat" && <Chat />}
       {screen === "post" && <NewPost />}
+      {screen === "comunidades" && <Comunidades />}
       <SidebarRight />
 
       <PublishContent />

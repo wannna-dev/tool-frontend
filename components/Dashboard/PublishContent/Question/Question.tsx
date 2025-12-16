@@ -81,6 +81,8 @@ const Question = ({ handleTabChange }: { handleTabChange: (tab: TabType) => void
                   value={question}
                   onChange={handleQuestionChange}
                 />
+
+                <h1>CONTEXT</h1>
               </div>
 
               <button 
