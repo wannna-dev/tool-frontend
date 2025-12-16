@@ -19,10 +19,10 @@ interface ReactionPickerProps {
 }
 
 const REACTIONS = [
-  { type: 'me_identifico' as ReactionType, icon: '/svg/reactions/me-identifico.svg', label: 'Me identifico' },
+  { type: 'me_identifico' as ReactionType, icon: '/svg/reactions/me-identifico.svg', label: 'Me representa' },
   { type: 'me_emociona' as ReactionType, icon: '/svg/reactions/me-emociono.svg', label: 'Me emociona' },
-  { type: 'me_enseno' as ReactionType, icon: '/svg/reactions/me-enseno.svg', label: 'Me enseñó' },
-  { type: 'me_alegra' as ReactionType, icon: '/svg/reactions/me-alegra.svg', label: 'Me alegra' },
+  { type: 'me_enseno' as ReactionType, icon: '/svg/reactions/me-enseno.svg', label: 'Me aporta' },
+  { type: 'me_alegra' as ReactionType, icon: '/svg/reactions/me-alegra.svg', label: 'Me hace reír' },
 ];
 
 // Color mapping for each reaction type

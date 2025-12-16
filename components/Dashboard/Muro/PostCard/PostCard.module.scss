@@ -7,8 +7,12 @@
     padding: var(--space-4);
     border-radius: var(--border-radius-small);
 
+    background-color: rgb(from var(--color-gray-light) r g b / 0);
+    transition: background-color 0.3s ease;
+
     &:hover {
-        background-color: var(--color-gray-light);
+        /* background-color: var(--color-gray-light); */
+        background-color: rgb(from var(--color-gray-light) r g b / 0.5);
     }
 
     &__header {
@@ -17,10 +21,7 @@
         align-items: center;
 
         margin-bottom: var(--space-4);
-        width: 100%;    
-
-        cursor: pointer;
-        
+        width: 100%;        
         
         &__username {
             text-decoration: none;

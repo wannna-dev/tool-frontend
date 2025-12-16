@@ -100,7 +100,7 @@ export async function createPost(title: string, content: string, image: string) 
   
   const { data, error } = await supabase
     .from("posts")
-    .insert({ title, description: content, user_id: user.id, image: image })
+    .insert({ title, description: content, user_id: user.id, image: image, private: false })
     .select()
     .single();
 

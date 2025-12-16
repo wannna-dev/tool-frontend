@@ -81,10 +81,10 @@ const Chat = () => {
 
                             {showMoods && (
                                 <div className={styles.chat__input__buttons__moods__buttons}>
-                                    <button data-variant="icon" className={styles.chat__input__buttons__moods__buttons__button} onClick={() => handleMood("resueno")}>Mood resueno</button>
-                                    <button data-variant="icon" className={styles.chat__input__buttons__moods__buttons__button} onClick={() => handleMood("emociona")}>Mood emociona</button>
-                                    <button data-variant="icon" className={styles.chat__input__buttons__moods__buttons__button} onClick={() => handleMood("enseno")}>Mood enseno</button>
-                                    <button data-variant="icon" className={styles.chat__input__buttons__moods__buttons__button} onClick={() => handleMood("alegra")}>Mood alegre</button>
+                                    <button data-variant="icon" className={styles.chat__input__buttons__moods__buttons__button} onClick={() => handleMood("resueno")}>Me siento empático</button>
+                                    <button data-variant="icon" className={styles.chat__input__buttons__moods__buttons__button} onClick={() => handleMood("emociona")}>Me siento sensible</button>
+                                    <button data-variant="icon" className={styles.chat__input__buttons__moods__buttons__button} onClick={() => handleMood("enseno")}>Me siento receptivo</button>
+                                    <button data-variant="icon" className={styles.chat__input__buttons__moods__buttons__button} onClick={() => handleMood("alegra")}>Me siento juguetón</button>
                                 </div>
                             )}
                         </div>
