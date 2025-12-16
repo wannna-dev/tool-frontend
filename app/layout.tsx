@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.scss";
 import { AppProvider } from "@/context/AppContext";
 import { AuthHandler } from "./auth-handler";
+import { Suspense } from "react";
 
 
 // Diatype Expanded Font
@@ -61,7 +62,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${diatypeSemiMonoFont.variable} ${diaypeExpandedFont.variable} ${diatypeBoldTrialFont.variable}`}>
         <AppProvider>
-          <AuthHandler />
+          <Suspense fallback={null}>
+            <AuthHandler />
+          </Suspense>
           {children}
         </AppProvider>
       </body>
