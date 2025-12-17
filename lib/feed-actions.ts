@@ -114,11 +114,6 @@ export async function getFeed() {
   ];
 
   // Sort by created_at descending
-  feedItems.sort((a, b) => {
-    const dateA = new Date(a.created_at).getTime();
-    const dateB = new Date(b.created_at).getTime();
-    return dateB - dateA; // Descending order (newest first)
-  });
-
+  feedItems.sort(() => Math.random() - 0.5);
   return feedItems;
 }
