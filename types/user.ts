@@ -1,3 +1,4 @@
+import { CommunityType } from "./community";
 export interface UserType {
   id: string;
   avatar_url: string;
@@ -8,4 +9,5 @@ export interface UserType {
   date_of_birth: string;
   location: string;
   picture: string;
+  community: CommunityType[];
 }

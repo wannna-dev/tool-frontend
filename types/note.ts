@@ -1,10 +1,9 @@
 import { ReactionType } from "./reactions";
 import { ProfileType } from "./profile";
-export interface PostType {
+export interface NoteType {
   id: string;
   image: string;
-  title: string;
-  description: string;
+  content: string;
   created_at: Date;
   likesCount: number;
   likedByCurrentUser: boolean;

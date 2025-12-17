@@ -1,0 +1,49 @@
+.publishAs {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-4);
+  align-items: center;
+  height: 44px;
+
+  background-color: var(--color-gray-light);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--border-radius-small);
+
+
+  &__user {
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-2);
+    color: var(--color-gray-dark);
+    cursor: pointer;
+
+    &__active {
+      color: var(--color-black);
+    }
+  }
+
+  &__separator {
+    width: 1px;
+    height: 100%;
+    background-color: var(--color-gray);
+  }
+
+  &__anonymous {
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-2);
+    color: var(--color-gray-dark);
+    cursor: pointer;
+    path {
+      stroke: var(--color-gray-dark);
+    }
+
+    &__active {
+      color: var(--color-black);
+      path {
+        stroke: var(--color-black);
+      }
+    }
+  }
+
+}

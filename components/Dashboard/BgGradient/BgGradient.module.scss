@@ -14,7 +14,7 @@
   &__container {
     width: 100%;
     height: 100%;
-    filter: url('#goo') blur(40px);
+    filter: url('#goo') blur(10px);
   }
 
   &__g1 {
@@ -77,15 +77,15 @@
 
     mix-blend-mode: hard-light;
 
-    width: calc(var(--circle-size) * 2);
-    height: calc(var(--circle-size) * 2);
+    width: calc(var(--circle-size));
+    height: calc(var(--circle-size));
 
     top: calc(50% - var(--circle-size) / 2);
     left: calc(50% - var(--circle-size) / 2);
      
     opacity: 0.3;
 
-    transform-origin: calc(50% - 200px);
+    transform-origin: calc(50% - 100px);
     animation: moveHorizontal 40s ease infinite;
   }
 }

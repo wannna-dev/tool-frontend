@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useAppContext } from "@/context/AppContext";
 import { signout } from "@/lib/auth-actions";
+import Communities from "./Communities/Communities";
 
 // Move SidebarItem outside and memoize it
 const SidebarItem = memo(({
@@ -134,27 +135,24 @@ const SidebarLeft = () => {
           </div>
         </div>
 
-        <SidebarItem 
-          label="Nuevo Chat" 
-          active={screen === "chat"} 
-          onClick={() => handleScreen("chat")} 
-          icon="chat" 
-          isCollapsed={!isSidebarLeftOpen} 
-        />
-        <SidebarItem 
-          label="Muro" 
-          active={screen === "muro"} 
-          onClick={() => handleScreen("muro")} 
-          icon="feed" 
-          isCollapsed={!isSidebarLeftOpen} 
-        />
-        <SidebarItem 
-          label="Comunidades" 
-          active={screen === "comunidades"} 
-          onClick={() => handleScreen("comunidades")} 
-          icon="community" 
-          isCollapsed={!isSidebarLeftOpen} 
-        />
+        <div className={styles.sidebar__container__items}>
+          <SidebarItem 
+            label="Nuevo Chat" 
+            active={screen === "chat"} 
+            onClick={() => handleScreen("chat")} 
+            icon="chat" 
+            isCollapsed={!isSidebarLeftOpen} 
+          />
+          <SidebarItem 
+            label="Historias" 
+            active={screen === "muro"} 
+            onClick={() => handleScreen("muro")} 
+            icon="feed" 
+            isCollapsed={!isSidebarLeftOpen} 
+          />
+        </div>
+
+        <Communities />
       </div>
 
       {/* Footer */}

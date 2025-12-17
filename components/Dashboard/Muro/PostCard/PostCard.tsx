@@ -15,8 +15,8 @@ const PostCard = ({ post }: { post: PostType & { profiles: ProfileType, totalRea
   // Memoize computed values
   const daysAgo = useMemo(() => getDaysAgo(post.created_at as Date), [post.created_at]);
   const avatarStyle = useMemo(
-    () => ({ backgroundImage: `url("${post.profiles.picture}")` }),
-    [post.profiles.picture]
+    () => ({ backgroundImage: `url("${post.private ? "/svg/anonymous-avatar.svg" : post.profiles.picture}")` }),
+    [post.private, post.profiles.picture]
   );
 
   const handleReportPost = useCallback(async () => {
@@ -36,24 +36,41 @@ const PostCard = ({ post }: { post: PostType & { profiles: ProfileType, totalRea
   return (
     <div className={styles.postCard}>
       <div className={styles.postCard__header}>
-        <Link
-          className={styles.postCard__header__username}
-          href={`/${post.profiles.username}`}
-          prefetch={false}
-        >
-          <div
-            className={styles.postCard__header__avatar}
-            style={avatarStyle}
-            role="img"
-            aria-label={`${post.profiles.username} avatar`}
-          />
-          <p>
-            {post.profiles.username}{" "}
-            <span className={styles.postCard__header__createdAt}>
-              · {daysAgo}
-            </span>
-          </p>
-        </Link>
+        {post.private ? (
+          <div className={styles.postCard__header__username}>
+            <div
+              className={styles.postCard__header__avatar}
+              style={avatarStyle}
+              role="img"
+              aria-label={`Anónimo avatar`}
+            />
+            <p>
+              Anónimo{" "}
+              <span className={styles.postCard__header__createdAt}>
+                · {daysAgo}
+              </span>
+            </p>
+          </div>
+        ) : (
+          <Link
+            className={styles.postCard__header__username}
+            href={`/${post.profiles.username}`}
+            prefetch={false}
+          >
+            <div
+              className={styles.postCard__header__avatar}
+              style={avatarStyle}
+              role="img"
+              aria-label={`${post.profiles.username} avatar`}
+            />
+            <p>
+              {post.profiles.username}{" "}
+              <span className={styles.postCard__header__createdAt}>
+                · {daysAgo}
+              </span>
+            </p>
+          </Link>
+        )}
 
         <div className={styles.postCard__header__actions}>
           <button

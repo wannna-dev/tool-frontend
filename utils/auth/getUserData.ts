@@ -6,6 +6,7 @@ async function getUserProfile(userId: string) {
     .from("profiles")
     .select("*")
     .eq("id", userId)
+    .select("*, community(*)")
     .single();
 
   return data;

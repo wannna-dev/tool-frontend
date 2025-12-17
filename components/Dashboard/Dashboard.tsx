@@ -52,7 +52,7 @@ const Dashboard = ({ userLogged, usernameProfile, pageType }: DashboardProps) =>
 
   return (
     <main className={styles.dashboard}>
-      <BgGradient />
+      {/* <BgGradient /> */}
       <SidebarLeft />
       {screen === "muro" && <Muro />}
       {screen === "perfil" && <Perfil usernameProfile={usernameProfile} />}

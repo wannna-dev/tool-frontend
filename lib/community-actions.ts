@@ -10,11 +10,11 @@ import { createClient } from "@/utils/supabase/server";
 export async function getCommunitiesOfUser(userId: string) {
   const supabase = await createClient();
   
-  const { data: communities, error } = await supabase
+  const { data: community, error } = await supabase
     .from("community_members")
     .select(`
       *,
-      communities (
+      community (
         id,
         name,
         description,
@@ -31,5 +31,5 @@ export async function getCommunitiesOfUser(userId: string) {
   }
 
   // Retornar solo los datos de las comunidades
-  return communities?.map(item => item.communities) || [];
+  return community?.map(item => item.community) || [];
 }

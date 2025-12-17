@@ -1,5 +1,5 @@
 .sidebar {
-    width: 250px;
+    width: 283px;
     height: 100vh;
     border-right: 1px solid var(--color-divider);
     display: flex;
@@ -31,6 +31,10 @@
             &__collapse {
                 cursor: pointer;
             }
+        }
+
+        &__items {
+            margin-bottom: var(--space-6);
         }
 
         &__footer {
