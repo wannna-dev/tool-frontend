@@ -46,6 +46,17 @@
                 padding: var(--space-2) var(--space-4);
                 background-color: var(--color-white);
             }
+            &__content {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: var(--space-6);
+                &__name {
+                    &__community {
+                        font-size: var(--font-size-xl);
+                    }
+                }
+            }
         }
 
         &__avatar {
@@ -95,9 +106,9 @@
 
         display: flex;
         flex-direction: column;
+        /* text-align: center; */
         gap: var(--space-4);
-
-        margin-bottom: var(--space-2);
+        margin-bottom: var(--space-4);
         
         &__text {
             font-size: var(--font-size-2xl);

@@ -12,9 +12,20 @@ const QuestionCard = ({ question }: { question: QuestionType }) => {
 
     // Memoize computed values
     const daysAgo = useMemo(() => getDaysAgo(question.created_at as Date), [question.created_at]);
-    const avatarStyle = useMemo(
+    
+    /* const avatarStyle = useMemo(
         () => ({ backgroundImage: `url("${question.private ? "/svg/anonymous-avatar.svg" : question.profiles.picture}")` }),
         [question.private, question.profiles.picture]
+    ); */
+
+    const avatarStyle = useMemo(
+        () => {
+          const imageUrl = question.community?.image 
+            || (question.private ? "/svg/anonymous-avatar.svg" : question.profiles.picture);
+          
+          return { backgroundImage: `url("${imageUrl}")` };
+        },
+        [question.community?.image, question.private, question.profiles.picture]
     );
 
     const handleReportNote = useCallback(async () => {
@@ -38,17 +49,29 @@ const QuestionCard = ({ question }: { question: QuestionType }) => {
                     {question.private ? (
                     <div className={styles.questionCard__header__username}>
                         <div
-                        className={styles.questionCard__header__avatar}
-                        style={avatarStyle}
-                        role="img"
-                        aria-label={`Anónimo avatar`}
+                            className={styles.questionCard__header__avatar}
+                            style={avatarStyle}
+                            role="img"
+                            aria-label={`Anónimo avatar`}
                         />
-                        <p>
-                        Anónimo{" "}
-                        <span className={styles.questionCard__header__createdAt}>
+                        <div className={styles.questionCard__header__username__content}>
+                            <p className={styles.questionCard__header__username__content__name}>
+                            {question.community?.name && (
+                                <>
+                                <span className={styles.questionCard__header__username__content__name__community}>
+                                {question.community?.name}{" "}
+                                </span>
+                                <br />
+                                </>
+                            )}
+                            <span>
+                                by Anónimo{" "}
+                            </span>
+                            </p>
+                            <span className={styles.questionCard__header__createdAt}>
                             · {daysAgo}
-                        </span>
-                        </p>
+                            </span>
+                        </div>
                     </div>
                     ) : (
                     <Link
@@ -57,17 +80,29 @@ const QuestionCard = ({ question }: { question: QuestionType }) => {
                         prefetch={false}
                     >
                         <div
-                        className={styles.questionCard__header__avatar}
-                        style={avatarStyle}
-                        role="img"
-                        aria-label={`${question.profiles.username} avatar`}
+                            className={styles.questionCard__header__avatar}
+                            style={avatarStyle}
+                            role="img"
+                            aria-label={`${question.profiles.username} avatar`}
                         />
-                        <p>
-                        {question.profiles.username}{" "}
-                        <span className={styles.questionCard__header__createdAt}>
+                        <div className={styles.questionCard__header__username__content}>
+                            <p className={styles.questionCard__header__username__content__name}>
+                            {question.community?.name && (
+                                <>
+                                    <span className={styles.questionCard__header__username__content__name__community}>
+                                    {question.community?.name}{" "}
+                                    </span>
+                                    <br />
+                                </>
+                            )}
+                            <span>
+                            by {question.profiles.username}{" "}
+                            </span>
+                            </p>
+                            <span className={styles.questionCard__header__createdAt}>
                             · {daysAgo}
-                        </span>
-                        </p>
+                            </span>
+                        </div>
                     </Link>
                     )}
 

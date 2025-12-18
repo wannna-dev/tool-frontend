@@ -40,6 +40,14 @@ export async function getFeed() {
         username,
         picture
       ),
+      community (
+        id,
+        name,
+        description,
+        image,
+        created_by,
+        created_at
+      ),
       note_likes (
         user_id,
         reaction_type
@@ -56,6 +64,14 @@ export async function getFeed() {
         id,
         username,
         picture
+      ),
+      community (
+        id,
+        name,
+        description,
+        image,
+        created_by,
+        created_at
       )
     `)
     .order("created_at", { ascending: false });

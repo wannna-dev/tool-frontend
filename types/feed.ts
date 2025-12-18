@@ -1,5 +1,6 @@
 import { ReactionType } from "./reactions";
 import { ProfileType } from "./profile";
+import { CommunityType } from "./community";
 
 // Base type with all shared fields
 export interface BaseFeedItem {
@@ -30,12 +31,14 @@ export interface PostType extends BaseFeedItem {
 export interface NoteType extends BaseFeedItem {
   type: 'note';
   content: string;
+  community: CommunityType;
 }
 
 export interface QuestionType extends BaseFeedItem {
   type: 'question';
   question: string;
   context: string;
+  community: CommunityType;
 }
 
 // Union type for discriminated union (type narrowing)

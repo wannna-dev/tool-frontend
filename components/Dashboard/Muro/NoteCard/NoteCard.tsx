@@ -6,17 +6,27 @@ import Link from "next/link";
 import Image from "next/image";
 import { NoteType } from "@/types/feed";
 import ReactionPicker from "@/components/ReactionPicker/ReactionPicker";
-import { ReactionType } from "@/types/reactions";
 
 const NoteCard = ({ note }: { note: NoteType }) => {
   const [isModalActionsOpen, setIsModalActionsOpen] = useState(false);
 
   // Memoize computed values
   const daysAgo = useMemo(() => getDaysAgo(note.created_at as Date), [note.created_at]);
+
   const avatarStyle = useMemo(
+    () => {
+      const imageUrl = note.community?.image 
+        || (note.private ? "/svg/anonymous-avatar.svg" : note.profiles.picture);
+      
+      return { backgroundImage: `url("${imageUrl}")` };
+    },
+    [note.community?.image, note.private, note.profiles.picture]
+  );
+
+  /* const avatarStyle = useMemo(
     () => ({ backgroundImage: `url("${note.private ? "/svg/anonymous-avatar.svg" : note.profiles.picture}")` }),
     [note.private, note.profiles.picture]
-  );
+  ); */
 
   const handleReportNote = useCallback(async () => {
     setIsModalActionsOpen(false);
@@ -44,12 +54,24 @@ const NoteCard = ({ note }: { note: NoteType }) => {
                 role="img"
                 aria-label={`Anónimo avatar`}
               />
-              <p>
-                Anónimo{" "}
+              <div className={styles.noteCard__header__username__content}>
+                <p className={styles.noteCard__header__username__content__name}>
+                  {note.community?.name && (
+                    <>
+                    <span className={styles.noteCard__header__username__content__name__community}>
+                      {note.community?.name}{" "}
+                    </span>
+                    <br />
+                    </>
+                  )}
+                  <span>
+                    by Anónimo{" "}
+                  </span>
+                </p>
                 <span className={styles.noteCard__header__createdAt}>
                   · {daysAgo}
                 </span>
-              </p>
+              </div>
             </div>
           ) : (
             <Link
@@ -63,12 +85,24 @@ const NoteCard = ({ note }: { note: NoteType }) => {
                 role="img"
                 aria-label={`${note.profiles.username} avatar`}
               />
-              <p>
-                {note.profiles.username}{" "}
+              <div className={styles.noteCard__header__username__content}>
+                <p className={styles.noteCard__header__username__content__name}>
+                  {note.community?.name && (
+                    <>
+                    <span className={styles.noteCard__header__username__content__name__community}>
+                      {note.community?.name}{" "}
+                    </span>
+                    <br />
+                    </>
+                  )}
+                  <span>
+                  by {note.profiles.username}{" "}
+                  </span>
+                </p>
                 <span className={styles.noteCard__header__createdAt}>
                   · {daysAgo}
                 </span>
-              </p>
+              </div>
             </Link>
           )}
 

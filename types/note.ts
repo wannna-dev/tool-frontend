@@ -1,5 +1,7 @@
 import { ReactionType } from "./reactions";
 import { ProfileType } from "./profile";
+import { CommunityType } from "./community";
+
 export interface NoteType {
   id: string;
   image: string;
@@ -17,4 +19,5 @@ export interface NoteType {
     me_alegra: number;
   };
   userReactionType: ReactionType | null;
+  community: CommunityType;
 }
