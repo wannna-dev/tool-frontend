@@ -1,4 +1,6 @@
 import { UserType } from "./user";
+import { NoteType } from "./note";
+import { QuestionType } from "./question";
 export interface CommunityType {
   id: string;
   name: string;
@@ -8,4 +10,6 @@ export interface CommunityType {
   user_id: string;
   image: string;
   user: UserType;
+  notes: NoteType[];
+  questions: QuestionType[];
 }

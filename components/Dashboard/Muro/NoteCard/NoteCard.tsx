@@ -76,7 +76,7 @@ const NoteCard = ({ note }: { note: NoteType }) => {
           ) : (
             <Link
               className={styles.noteCard__header__username}
-              href={`/${note.profiles.username}`}
+              href={ `/${note.profiles.username}`}
               prefetch={false}
             >
               <div

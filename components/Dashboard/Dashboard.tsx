@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import Muro from "./Muro/Muro";
 import Perfil from "./Perfil/Perfil";
 import Chat from "./Chat/Chat";
-import Comunidades from "./Comunidades/Comunidades";
+import Comunidad from "./Comunidad/Comunidad";
 import NewPost from "./NewPost/NewPost";
 
 // components
@@ -23,10 +23,11 @@ import { UserType } from "@/types/user";
 interface DashboardProps {
   userLogged?: UserType; // Your custom user profile from database
   usernameProfile?: string;
-  pageType?: "muro" | "perfil" | "chat" | "post";
+  pageType?: "muro" | "perfil" | "chat" | "post" | "comunidad";
+  communityId?: string;
 }
 
-const Dashboard = ({ userLogged, usernameProfile, pageType }: DashboardProps) => {
+const Dashboard = ({ userLogged, usernameProfile, pageType, communityId }: DashboardProps) => {
   const {
     screen,
     setScreen,
@@ -58,7 +59,7 @@ const Dashboard = ({ userLogged, usernameProfile, pageType }: DashboardProps) =>
       {screen === "perfil" && <Perfil usernameProfile={usernameProfile} />}
       {screen === "chat" && <Chat />}
       {screen === "post" && <NewPost />}
-      {screen === "comunidades" && <Comunidades />}
+      {screen === "comunidad" && <Comunidad communityId={communityId} />}
       <SidebarRight />
 
       <PublishContent />

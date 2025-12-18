@@ -10,8 +10,8 @@ type ToastState = {
   };
 
 interface AppContextType {
-    screen: "muro" | "perfil" | "chat" | "post" | "comunidades";
-    setScreen: (screen: "muro" | "perfil" | "chat" | "post" | "comunidades") => void;
+    screen: "muro" | "perfil" | "chat" | "post" | "comunidad";
+    setScreen: (screen: "muro" | "perfil" | "chat" | "post" | "comunidad") => void;
     isSidebarRightOpen: boolean;
     setIsSidebarRightOpen: (isSidebarRightOpen: boolean) => void;
     isSidebarLeftOpen: boolean;
@@ -32,7 +32,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     // state
-    const [screen, setScreen] = useState<"muro" | "perfil" | "chat" | "post" | "comunidades">("chat");
+    const [screen, setScreen] = useState<"muro" | "perfil" | "chat" | "post" | "comunidad">("chat");
     
     // sidebars states
     const [isSidebarRightOpen, setIsSidebarRightOpen] = useState(false);

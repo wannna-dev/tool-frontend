@@ -1,0 +1,51 @@
+.comunidades {
+    margin: 0 auto;    
+    padding: var(--space-12) 0;
+    width: 100%;
+    overflow-y: scroll;
+    
+    &__container {
+        width: 95%;
+        margin: 0 auto;
+        max-width: var(--max-width-container);
+
+        &__header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-4);
+            margin-bottom: var(--space-8);
+
+            &__image {
+                border-radius: var(--border-radius);
+                object-fit: cover;
+                object-position: center;
+            }
+
+            &__name {
+                font-size: var(--font-size-2xl);
+                font-weight: 600;
+                text-align: center;
+            }
+
+            &__description {
+                font-size: var(--font-size-md);
+                color: var(--color-gray-dark);
+                text-align: center;
+            }
+        }
+
+        &__content {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+            margin-bottom: var(--space-8);
+
+            &__title {
+                font-size: var(--font-size-xl);
+            }
+        }
+    }
+
+    
+}

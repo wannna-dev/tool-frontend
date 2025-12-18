@@ -2,6 +2,39 @@
 
 import { createClient } from "@/utils/supabase/server";
 
+
+export async function getCommunity(communityId: string) {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("community")
+    .select(`
+      *,
+      profiles (
+        id,
+        username,
+        picture
+      ),
+      notes (
+        id,
+        content,
+        created_at
+      ),
+      questions (
+        id,
+        question,
+        created_at
+      )
+    `)
+    .eq("id", communityId)
+    .single();
+
+  if (error) {
+    console.error("Error fetching community:", error);
+    return null;
+  }
+  return data;
+}
+
 /*
   Get all communities where user is a member
   @param userId - The user ID
