@@ -71,7 +71,7 @@ const SidebarLeft = () => {
   }, [user?.picture]);
 
   // Memoize event handlers to prevent recreating on every render
-  const handleScreen = useCallback((screen: "muro" | "perfil" | "chat" | "comunidades") => {
+  const handleScreen = useCallback((screen: "muro" | "perfil" | "chat" | "comunidad") => {
     setScreen(screen);
     setIsSidebarRightOpen(false);
     setIsSettings(false);
