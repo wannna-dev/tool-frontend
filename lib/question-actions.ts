@@ -68,7 +68,7 @@ export async function getQuestions() {
 /*
   Create a new question
 */
-export async function createQuestion(text: string, publicPrivate: "public" | "anonima") {
+export async function createQuestion(text: string, context: string, publishAsAnonymous: boolean, publishFor: string) {
   const supabase = await createClient();
 
   const {
@@ -84,11 +84,10 @@ export async function createQuestion(text: string, publicPrivate: "public" | "an
     return { error: "La pregunta no puede estar vacía" };
   }
   
-  console.log(text, publicPrivate);
 
   const { data, error } = await supabase
     .from("questions")
-    .insert({ user_id: user.id, text: text.trim(), private: publicPrivate === "public" ? false : true })
+    .insert({ user_id: user.id, question: text.trim(), context: context.trim(), private: publishAsAnonymous, community_id: publishFor === "" ? null : publishFor})
     .select()
     .single();
 

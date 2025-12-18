@@ -47,8 +47,21 @@ export async function getFeed() {
     `)
     .order("created_at", { ascending: false });
 
-  if (postsError || notesError) {
-    console.error("Error fetching feed:", { postsError, notesError});
+  // Fetch questions
+  const { data: questions, error: questionsError } = await supabase
+    .from("questions")
+    .select(`
+      *,
+      profiles (
+        id,
+        username,
+        picture
+      )
+    `)
+    .order("created_at", { ascending: false });
+
+  if (postsError || notesError || questionsError) {
+    console.error("Error fetching feed:", { postsError, notesError, questionsError});
     return [];
   }
 
@@ -106,14 +119,50 @@ export async function getFeed() {
     };
   });
 
+  // Process questions
+  const processedQuestions = (questions || []).map((question) => {
+    const reactions = question.question_likes || [];
+    const totalReactions = reactions.length;
+    
+    const reactionCounts = {
+      me_identifico: reactions.filter((r: { reaction_type: string }) => r.reaction_type === 'me_identifico').length,
+      me_emociona: reactions.filter((r: { reaction_type: string }) => r.reaction_type === 'me_emociona').length,
+      me_enseno: reactions.filter((r: { reaction_type: string }) => r.reaction_type === 'me_enseno').length,
+      me_alegra: reactions.filter((r: { reaction_type: string }) => r.reaction_type === 'me_alegra').length,
+    };
+
+    const userReaction = user
+      ? reactions.find((r: { user_id: string }) => r.user_id === user.id)
+      : null;
+
+    const { question_likes, ...questionData } = question;
+
+    return {
+      ...questionData,
+      type: 'question' as const,
+      totalReactions,
+      reactionCounts,
+      userReactionType: userReaction?.reaction_type || null,
+    };
+  });
 
   // Combine all items
-  const feedItems = [
-    ...processedPosts,
-    ...processedNotes,
-  ];
+  const feedItems = [];
 
-  // Sort by created_at descending
-  feedItems.sort(() => Math.random() - 0.5);
+  // Interleave posts and notes (one post, one note, one post, one note, etc.)
+  const maxLength = Math.max(processedPosts.length, processedNotes.length, processedQuestions.length);
+
+  for (let i = 0; i < maxLength; i++) {
+    if (i < processedPosts.length) {
+      feedItems.push(processedPosts[i]);
+    }
+    if (i < processedNotes.length) {
+      feedItems.push(processedNotes[i]);
+    }
+    if (i < processedQuestions.length) {
+      feedItems.push(processedQuestions[i]);
+    }
+  }
+
   return feedItems;
 }

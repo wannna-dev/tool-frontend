@@ -34,8 +34,8 @@ export interface NoteType extends BaseFeedItem {
 
 export interface QuestionType extends BaseFeedItem {
   type: 'question';
-  title: string;
-  content: string;
+  question: string;
+  context: string;
 }
 
 // Union type for discriminated union (type narrowing)

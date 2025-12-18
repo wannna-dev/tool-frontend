@@ -34,95 +34,98 @@ const NoteCard = ({ note }: { note: NoteType }) => {
 
   return (
     <div className={styles.noteCard}>
-      <div className={styles.noteCard__header}>
-        {note.private ? (
-          <div className={styles.noteCard__header__username}>
-            <div
-              className={styles.noteCard__header__avatar}
-              style={avatarStyle}
-              role="img"
-              aria-label={`Anónimo avatar`}
-            />
-            <p>
-              Anónimo{" "}
-              <span className={styles.noteCard__header__createdAt}>
-                · {daysAgo}
-              </span>
-            </p>
-          </div>
-        ) : (
-          <Link
-            className={styles.noteCard__header__username}
-            href={`/${note.profiles.username}`}
-            prefetch={false}
-          >
-            <div
-              className={styles.noteCard__header__avatar}
-              style={avatarStyle}
-              role="img"
-              aria-label={`${note.profiles.username} avatar`}
-            />
-            <p>
-              {note.profiles.username}{" "}
-              <span className={styles.noteCard__header__createdAt}>
-                · {daysAgo}
-              </span>
-            </p>
-          </Link>
-        )}
+      <div className={styles.noteCard__container}>
+        <div className={styles.noteCard__header}>
+          {note.private ? (
+            <div className={styles.noteCard__header__username}>
+              <div
+                className={styles.noteCard__header__avatar}
+                style={avatarStyle}
+                role="img"
+                aria-label={`Anónimo avatar`}
+              />
+              <p>
+                Anónimo{" "}
+                <span className={styles.noteCard__header__createdAt}>
+                  · {daysAgo}
+                </span>
+              </p>
+            </div>
+          ) : (
+            <Link
+              className={styles.noteCard__header__username}
+              href={`/${note.profiles.username}`}
+              prefetch={false}
+            >
+              <div
+                className={styles.noteCard__header__avatar}
+                style={avatarStyle}
+                role="img"
+                aria-label={`${note.profiles.username} avatar`}
+              />
+              <p>
+                {note.profiles.username}{" "}
+                <span className={styles.noteCard__header__createdAt}>
+                  · {daysAgo}
+                </span>
+              </p>
+            </Link>
+          )}
 
-        <div className={styles.noteCard__header__actions}>
-          <button
-            className={styles.noteCard__header__actions__icon}
-            onClick={toggleModalActions}
-            aria-label="Note options"
-            data-variant="icon"
-          >
-            <Image
-              src="/svg/dots.svg"
-              alt=""
-              width={22}
-              height={5}
-              loading="lazy"
-            />
-          </button>
-          {isModalActionsOpen && (
-            <div
-              className={styles.noteCard__header__actions__modal}
-              onClick={handleReportNote}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => e.key === "Enter" && handleReportNote()}
+          <div className={styles.noteCard__header__actions}>
+            <button
+              className={styles.noteCard__header__actions__icon}
+              onClick={toggleModalActions}
+              aria-label="Note options"
+              data-variant="icon"
             >
               <Image
-                src="/svg/megaphone.svg"
+                src="/svg/dots.svg"
                 alt=""
-                width={24}
-                height={24}
+                width={22}
+                height={5}
                 loading="lazy"
               />
-              <p>Denunciar</p>
-            </div>
+            </button>
+            {isModalActionsOpen && (
+              <div
+                className={styles.noteCard__header__actions__modal}
+                onClick={handleReportNote}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === "Enter" && handleReportNote()}
+              >
+                <Image
+                  src="/svg/megaphone.svg"
+                  alt=""
+                  width={24}
+                  height={24}
+                  loading="lazy"
+                />
+                <p>Denunciar</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className={styles.noteCard__content}>
+          {note.content && (
+            <p className={styles.noteCard__content__text}>
+              {note.content}
+            </p>
           )}
         </div>
-      </div>
 
-      <div className={styles.noteCard__content}>
-        {note.content && (
-          <p className={styles.noteCard__content__text}>
-            {note.content}
-          </p>
-        )}
-      </div>
-
-      <div className={styles.noteCard__footer}>
-        <div className={styles.noteCard__footer__likes}>
-          <ReactionPicker
-            postId={note.id}
-            initialTotalReactions={note.totalReactions}
-            initialReactionCounts={note.reactionCounts}
-            initialUserReactionType={note.userReactionType}
-          />
+        <div className={styles.noteCard__footer}>
+          <div className={styles.noteCard__footer__likes}>
+            <ReactionPicker
+              postId={note.id}
+              postType="note"
+              initialTotalReactions={note.totalReactions}
+              initialReactionCounts={note.reactionCounts}
+              initialUserReactionType={note.userReactionType}
+            />
+          </div>
         </div>
       </div>
     </div>

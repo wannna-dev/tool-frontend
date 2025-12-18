@@ -3,6 +3,7 @@ import styles from "./Muro.module.scss";
 import { useState, useEffect } from "react";
 import PostCard from "./PostCard/PostCard";
 import NoteCard from "./NoteCard/NoteCard";
+import QuestionCard from "./QuestionCard/QuestionCard";
 import CarouselTopics from "./CarouselTopics/CarouselTopics";
 
 import { getFeed } from "@/lib/feed-actions";
@@ -38,6 +39,10 @@ const Muro = () => {
                 // TypeScript knows item is NoteType here
                 return <NoteCard note={item} />;
 
+            case 'question':
+                // TypeScript knows item is QuestionType here
+                return <QuestionCard question={item} />;
+
             default:
                 // TypeScript will error if you forget a case
                 return null;
@@ -47,9 +52,9 @@ const Muro = () => {
     return (
         <div className={styles.muro}>
             <div className={styles.muro__container}>
-                <div className={styles.muro__carouselTopics}>
+                {/* <div className={styles.muro__carouselTopics}>
                     <CarouselTopics />
-                </div>
+                </div> */}
 
                 <div className={styles.muro__content}>
                     <div className={styles.muro__content__posts}>

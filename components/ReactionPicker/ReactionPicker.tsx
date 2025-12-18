@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useTransition, useRef, useEffect } from "react";
-import { toggleReaction } from "@/lib/post-actions";
+import { toggleReaction } from "@/lib/reaction-actions";
 import { ReactionType } from "@/types/reactions";
 import styles from "./ReactionPicker.module.scss";
 import Image from "next/image";
 
 interface ReactionPickerProps {
   postId: string;
+  postType: "post" | "note" | "question";
   initialTotalReactions: number;
   initialReactionCounts: {
     me_identifico: number;
@@ -35,6 +36,7 @@ const REACTION_COLORS: Record<ReactionType, string> = {
 
 export default function ReactionPicker({
   postId,
+  postType,
   initialTotalReactions,
   initialReactionCounts,
   initialUserReactionType,
@@ -99,7 +101,8 @@ export default function ReactionPicker({
     }
 
     startTransition(async () => {
-      const result = await toggleReaction(postId, reactionType);
+
+      const result = await toggleReaction(postId, postType as "post" | "note", reactionType);
       console.log("🚀 result:", result);
 
       if (result.error) {

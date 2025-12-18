@@ -12,6 +12,7 @@ const PublishFor = ({ handlePublishFor }: { handlePublishFor: (communityId: stri
   const [selectedPublishFor, setSelectedPublishFor] = useState({ id: "", name: "Everyone", icon: "/svg/feed.svg" });
 
   const handleSelectPublishFor = (publishFor: { id: string, name: string, icon: string }) => {
+    console.log("Publish For:", publishFor.id);
     setSelectedPublishFor(publishFor);
     setShowDropdown(false);
     handlePublishFor(publishFor.id);

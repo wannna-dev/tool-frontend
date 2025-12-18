@@ -68,7 +68,7 @@ export async function getNotes() {
 /*
   Create a new note
 */
-export async function createNote(text: string, publishAs: string, publishAsAnonymous: boolean) {
+export async function createNote(text: string, publishFor: string, publishAsAnonymous: boolean) {
   const supabase = await createClient();
 
   const {
@@ -91,7 +91,7 @@ export async function createNote(text: string, publishAs: string, publishAsAnony
 
   const { data, error } = await supabase
     .from("notes")
-    .insert({ user_id: user.id, content: text, community_id: publishAs, private: publishAsAnonymous })
+    .insert({ user_id: user.id, content: text, community_id: publishFor === "" ? null : publishFor, private: publishAsAnonymous })
     .select()
     .single();
 

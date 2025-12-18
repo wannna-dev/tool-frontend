@@ -14,7 +14,7 @@ const Note = ({ handleTabChange }: { handleTabChange: (tab: TabType) => void }) 
   const { setToast, user } = useAppContext();
 
     const [text, setText] = useState("");
-    const [publishAs, setPublishAs] = useState<string>("");
+    const [publishFor, setPublishFor] = useState<string>("");
     const [publishAsAnonymous, setPublishAsAnonymous] = useState<boolean>(false);
     const maxLength = 150;
 
@@ -25,7 +25,7 @@ const Note = ({ handleTabChange }: { handleTabChange: (tab: TabType) => void }) 
             // Do something with the note text
             console.log("Note submitted:", text);
 
-            const data = await createNote(text, publishAs, publishAsAnonymous);
+            const data = await createNote(text, publishFor, publishAsAnonymous);
             console.log(data)
 
             if (data.success) {
@@ -48,7 +48,7 @@ const Note = ({ handleTabChange }: { handleTabChange: (tab: TabType) => void }) 
     };
 
     const handlePublishFor = (communityId: string) => {
-      setPublishAs(communityId);
+      setPublishFor(communityId);
     };
 
     const handlePublishAs = (isAnonymous: boolean) => {

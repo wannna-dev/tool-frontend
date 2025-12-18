@@ -35,126 +35,129 @@ const PostCard = ({ post }: { post: PostType & { profiles: ProfileType, totalRea
 
   return (
     <div className={styles.postCard}>
-      <div className={styles.postCard__header}>
-        {post.private ? (
-          <div className={styles.postCard__header__username}>
-            <div
-              className={styles.postCard__header__avatar}
-              style={avatarStyle}
-              role="img"
-              aria-label={`Anónimo avatar`}
-            />
-            <p>
-              Anónimo{" "}
-              <span className={styles.postCard__header__createdAt}>
-                · {daysAgo}
-              </span>
-            </p>
-          </div>
-        ) : (
-          <Link
-            className={styles.postCard__header__username}
-            href={`/${post.profiles.username}`}
-            prefetch={false}
-          >
-            <div
-              className={styles.postCard__header__avatar}
-              style={avatarStyle}
-              role="img"
-              aria-label={`${post.profiles.username} avatar`}
-            />
-            <p>
-              {post.profiles.username}{" "}
-              <span className={styles.postCard__header__createdAt}>
-                · {daysAgo}
-              </span>
-            </p>
-          </Link>
-        )}
+      <div className={styles.postCard__container}>  
+        <div className={styles.postCard__header}>
+          {post.private ? (
+            <div className={styles.postCard__header__username}>
+              <div
+                className={styles.postCard__header__avatar}
+                style={avatarStyle}
+                role="img"
+                aria-label={`Anónimo avatar`}
+              />
+              <p>
+                Anónimo{" "}
+                <span className={styles.postCard__header__createdAt}>
+                  · {daysAgo}
+                </span>
+              </p>
+            </div>
+          ) : (
+            <Link
+              className={styles.postCard__header__username}
+              href={`/${post.profiles.username}`}
+              prefetch={false}
+            >
+              <div
+                className={styles.postCard__header__avatar}
+                style={avatarStyle}
+                role="img"
+                aria-label={`${post.profiles.username} avatar`}
+              />
+              <p>
+                {post.profiles.username}{" "}
+                <span className={styles.postCard__header__createdAt}>
+                  · {daysAgo}
+                </span>
+              </p>
+            </Link>
+          )}
 
-        <div className={styles.postCard__header__actions}>
-          <button
-            className={styles.postCard__header__actions__icon}
-            onClick={toggleModalActions}
-            aria-label="Post options"
-            data-variant="icon"
-          >
-            <Image
-              src="/svg/dots.svg"
-              alt=""
-              width={22}
-              height={5}
-              loading="lazy"
-            />
-          </button>
-          {isModalActionsOpen && (
-            <div
-              className={styles.postCard__header__actions__modal}
-              onClick={handleReportPost}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => e.key === "Enter" && handleReportPost()}
+          <div className={styles.postCard__header__actions}>
+            <button
+              className={styles.postCard__header__actions__icon}
+              onClick={toggleModalActions}
+              aria-label="Post options"
+              data-variant="icon"
             >
               <Image
-                src="/svg/megaphone.svg"
+                src="/svg/dots.svg"
                 alt=""
-                width={24}
-                height={24}
+                width={22}
+                height={5}
                 loading="lazy"
               />
-              <p>Denunciar</p>
+            </button>
+            {isModalActionsOpen && (
+              <div
+                className={styles.postCard__header__actions__modal}
+                onClick={handleReportPost}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === "Enter" && handleReportPost()}
+              >
+                <Image
+                  src="/svg/megaphone.svg"
+                  alt=""
+                  width={24}
+                  height={24}
+                  loading="lazy"
+                />
+                <p>Denunciar</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className={styles.postCard__content}>
+          {post.title && (
+            <p className={styles.postCard__content__title}>{post.title}</p>
+          )}
+          {post.description && (
+            <p className={styles.postCard__content__description}>
+              {post.description.split(' ').length > 35 ? (
+                <>
+                  {post.description.split(' ').slice(0, 35).join(' ')}... 
+                  <span className={styles.postCard__content__description__more}> Más</span>
+                </>
+              ) : (
+                post.description
+              )}
+            </p>
+          )}
+          {post.image && (
+            <div className={styles.postCard__content__image}>
+              <Image
+                className={styles.postCard__content__image__img}
+                src={post.image}
+                alt={post.title || "Post image"}
+                width={300}
+                height={300}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                loading="lazy"
+                quality={85}
+              />
             </div>
           )}
         </div>
-      </div>
 
-      <div className={styles.postCard__content}>
-        {post.title && (
-          <p className={styles.postCard__content__title}>{post.title}</p>
-        )}
-        {post.description && (
-          <p className={styles.postCard__content__description}>
-            {post.description.split(' ').length > 35 ? (
-              <>
-                {post.description.split(' ').slice(0, 35).join(' ')}... 
-                <span className={styles.postCard__content__description__more}> Más</span>
-              </>
-            ) : (
-              post.description
-            )}
-          </p>
-        )}
-        {post.image && (
-          <div className={styles.postCard__content__image}>
-            <Image
-              className={styles.postCard__content__image__img}
-              src={post.image}
-              alt={post.title || "Post image"}
-              width={300}
-              height={300}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              loading="lazy"
-              quality={85}
-            />
+        <div className={styles.postCard__footer}>
+          <div className={styles.postCard__footer__likes}>
+              <ReactionPicker
+                postId={post.id}
+                postType="post"
+                initialTotalReactions={post.totalReactions}
+                initialReactionCounts={post.reactionCounts}
+                initialUserReactionType={post.userReactionType}
+              />
           </div>
-        )}
-      </div>
 
-      <div className={styles.postCard__footer}>
-        <div className={styles.postCard__footer__likes}>
-            <ReactionPicker
-              postId={post.id}
-              initialTotalReactions={post.totalReactions}
-              initialReactionCounts={post.reactionCounts}
-              initialUserReactionType={post.userReactionType}
-            />
-        </div>
+          <div className={styles.postCard__footer__comments}>
 
-        <div className={styles.postCard__footer__comments}>
+            {/* <button data-variant="icon">Comentar</button>
+            <button data-variant="icon">223 comentarios</button> */}
 
-          {/* <button data-variant="icon">Comentar</button>
-          <button data-variant="icon">223 comentarios</button> */}
-
+          </div>
         </div>
       </div>
     </div>
