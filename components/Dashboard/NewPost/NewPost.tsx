@@ -5,6 +5,8 @@ import { createPost } from "@/lib/post-actions";
 import { useAppContext } from "@/context/AppContext";
 import Image from "next/image";
 import Tiptap from "@/components/Tiptap/Tiptap";
+import PublishFor from "@/components/PublishFor/PublishFor";
+import PublishAs from "@/components/PublishAs/PublishAs";
 
 const NewPost = () => {
 
@@ -13,6 +15,9 @@ const NewPost = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  const [publishFor, setPublishFor] = useState<string>("");
+  const [publishAsAnonymous, setPublishAsAnonymous] = useState<boolean>(false);
+
 
   // Refs
   const imageInputRef = useRef<HTMLInputElement>(null);
@@ -41,7 +46,7 @@ const NewPost = () => {
         }
       }
 
-      const data = await createPost(title, content, uploadedImageUrl);
+      const data = await createPost(title, content, uploadedImageUrl, publishAsAnonymous, publishFor);
       if (data.success) {
         console.log("Post creado correctamente");
         setToast({
@@ -92,6 +97,14 @@ const NewPost = () => {
     setFile(file);
   };
 
+  const handlePublishFor = (communityId: string) => {
+    setPublishFor(communityId);
+  };
+
+  const handlePublishAs = (isAnonymous: boolean) => {
+    setPublishAsAnonymous(isAnonymous);
+  };
+
   return (
     <div className={styles.newpost}>
       <div className={styles.newpost__container}>
@@ -100,6 +113,10 @@ const NewPost = () => {
         </div>
         <div className={styles.newpost__container__content}>
           <div className={styles.newpost__container__content__form}>
+            <div className={styles.newpost__container__content__form__settings}>
+                <PublishFor handlePublishFor={handlePublishFor} />
+                <PublishAs handlePublishAs={handlePublishAs} />
+              </div>
             <form className={styles.newpost__container__content__form__form} onSubmit={handleSubmit}>
               <div className={styles.newpost__container__content__form__form__content}>
                 {/* Image */}

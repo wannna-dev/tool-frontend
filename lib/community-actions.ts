@@ -14,6 +14,17 @@ export async function getCommunity(communityId: string) {
         username,
         picture
       ),
+      posts (
+        id,
+        title,
+        description,
+        created_at,
+        profiles (
+          id,
+          username,
+          picture
+        )
+      ),
       notes (
         id,
         content,

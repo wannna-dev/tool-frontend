@@ -52,9 +52,24 @@
                 align-items: flex-start;
             }
 
-            p {
+            &__content {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: var(--space-6);
+
                 @include bp.respond-to(md) {
-                    font-size: var(--font-size-sm);
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: var(--space-2);
+                }
+                &__name {
+                    &__community {
+                        font-size: var(--font-size-xl);
+                        @include bp.respond-to(md) {
+                            font-size: var(--font-size-lg);
+                        }
+                    }
                 }
             }
         }

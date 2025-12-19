@@ -69,12 +69,71 @@ export async function getPosts() {
 
 
 /*
+  Get a post by id
+  @param postId - The ID of the post to get
+  @returns {Promise<{error: string, post: PostType}>} - The result of the get post
+*/
+export async function getPost(postId: string) {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const { data: post, error } = await supabase
+    .from("posts")
+    .select(`
+      *,
+      profiles (
+        id,
+        username,
+        picture
+      ),
+      post_likes (
+        user_id,
+        reaction_type
+      )
+    `)
+    .eq("id", postId)
+    .single();
+
+  if (error) {
+    console.error("Error fetching post:", error);
+    return null;
+  }
+
+  const reactions = post.post_likes || [];
+  const totalReactions = reactions.length;
+  
+  // Count reactions by type
+  const reactionCounts = {
+    me_identifico: reactions.filter((r: { reaction_type: string; }) => r.reaction_type === 'me_identifico').length,
+    me_emociona: reactions.filter((r: { reaction_type: string; }) => r.reaction_type === 'me_emociona').length,
+    me_enseno: reactions.filter((r: { reaction_type: string; }) => r.reaction_type === 'me_enseno').length,
+    me_alegra: reactions.filter((r: { reaction_type: string; }) => r.reaction_type === 'me_alegra').length,
+  };
+
+  // Check if current user reacted and with what type
+  const userReaction = user
+    ? reactions.find((r: { user_id: string; }) => r.user_id === user.id)
+    : null;
+
+  const { post_likes, ...postData } = post;
+
+  return {
+    ...postData,
+    totalReactions,
+    reactionCounts,
+    userReactionType: userReaction?.reaction_type || null,
+  };
+}
+/*
   Create a new post
   @param title - The title of the post
   @param content - The content of the post
   @returns {Promise<{error: string, success: boolean, post: PostType}>} - The result of the create post
 */
-export async function createPost(title: string, content: string, image: string) {
+export async function createPost(title: string, content: string, image: string, publishAsAnonymous: boolean, publishFor: string) {
   const supabase = await createClient();
 
   const {
@@ -100,7 +159,7 @@ export async function createPost(title: string, content: string, image: string) 
   
   const { data, error } = await supabase
     .from("posts")
-    .insert({ title, description: content, user_id: user.id, image: image, private: false })
+    .insert({ title, description: content, user_id: user.id, image: image, private: publishAsAnonymous, community_id: publishFor === "" ? null : publishFor })
     .select()
     .single();
 

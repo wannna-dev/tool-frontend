@@ -9,14 +9,23 @@ import { ProfileType } from "@/types/profile";
 import ReactionPicker from "@/components/ReactionPicker/ReactionPicker";
 import { ReactionType } from "@/types/reactions";
 
-const PostCard = ({ post }: { post: PostType & { profiles: ProfileType, totalReactions: number, reactionCounts: { me_identifico: number, me_emociona: number, me_enseno: number, me_alegra: number }, userReactionType: ReactionType | null } }) => {
+const PostCard = ({ post, longText = false }: { post: PostType & { profiles: ProfileType, totalReactions: number, reactionCounts: { me_identifico: number, me_emociona: number, me_enseno: number, me_alegra: number }, userReactionType: ReactionType | null }, longText?: boolean }) => {
   const [isModalActionsOpen, setIsModalActionsOpen] = useState(false);
 
   // Memoize computed values
   const daysAgo = useMemo(() => getDaysAgo(post.created_at as Date), [post.created_at]);
-  const avatarStyle = useMemo(
+  /* const avatarStyle = useMemo(
     () => ({ backgroundImage: `url("${post.private ? "/svg/anonymous-avatar.svg" : post.profiles.picture}")` }),
     [post.private, post.profiles.picture]
+  ); */
+  const avatarStyle = useMemo(
+    () => {
+      const imageUrl = post.community?.image 
+        || (post.private ? "/svg/anonymous-avatar.svg" : post.profiles.picture);
+      
+      return { backgroundImage: `url("${imageUrl}")` };
+    },
+    [post.community?.image, post.private, post.profiles.picture]
   );
 
   const handleReportPost = useCallback(async () => {
@@ -34,7 +43,7 @@ const PostCard = ({ post }: { post: PostType & { profiles: ProfileType, totalRea
   }, []);
 
   return (
-    <div className={styles.postCard}>
+    <Link href={`/p/${post.id}`} className={styles.postCard}>
       <div className={styles.postCard__container}>  
         <div className={styles.postCard__header}>
           {post.private ? (
@@ -45,12 +54,24 @@ const PostCard = ({ post }: { post: PostType & { profiles: ProfileType, totalRea
                 role="img"
                 aria-label={`Anónimo avatar`}
               />
-              <p>
-                Anónimo{" "}
+              <div className={styles.postCard__header__username__content}>
+                <p className={styles.postCard__header__username__content__name}>
+                  {post.community?.name && (
+                    <>
+                    <span className={styles.postCard__header__username__content__name__community}>
+                      {post.community?.name}{" "}
+                    </span>
+                    <br />
+                    </>
+                  )}
+                  <span>
+                    by Anónimo{" "}
+                  </span>
+                </p>
                 <span className={styles.postCard__header__createdAt}>
                   · {daysAgo}
                 </span>
-              </p>
+              </div>
             </div>
           ) : (
             <Link
@@ -64,12 +85,24 @@ const PostCard = ({ post }: { post: PostType & { profiles: ProfileType, totalRea
                 role="img"
                 aria-label={`${post.profiles.username} avatar`}
               />
-              <p>
-                {post.profiles.username}{" "}
-                <span className={styles.postCard__header__createdAt}>
+              <div className={styles.postCard__header__username__content}>
+                <p className={styles.postCard__header__username__content__name}>
+                  {post.community?.name && (
+                    <>
+                    <span className={styles.postCard__header__username__content__name__community}>
+                      {post.community?.name}{" "}
+                    </span>
+                    <br />
+                    </>
+                  )}
+                  <span>
+                  by {post.profiles.username}{" "}
+                  </span>
+                </p>
+                <span className={styles.noteCard__header__createdAt}>
                   · {daysAgo}
                 </span>
-              </p>
+              </div>
             </Link>
           )}
 
@@ -116,7 +149,7 @@ const PostCard = ({ post }: { post: PostType & { profiles: ProfileType, totalRea
           {post.description && (
             <p className={styles.postCard__content__description}>
               <div dangerouslySetInnerHTML={{ 
-                __html: post.description.length > 100 
+                __html: longText ? post.description : post.description.length > 100 
                   ? post.description.slice(0, 100) + '... <span class="' + styles.postCard__content__description__more + '">Más</span>'
                   : post.description 
               }} />
@@ -158,7 +191,7 @@ const PostCard = ({ post }: { post: PostType & { profiles: ProfileType, totalRea
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

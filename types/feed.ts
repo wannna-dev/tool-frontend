@@ -19,6 +19,7 @@ export interface BaseFeedItem {
     me_alegra: number;
   };
   userReactionType: ReactionType | null;
+  community: CommunityType;
 }
 
 // Extend base for each specific type

@@ -1,0 +1,16 @@
+@use "@/app/_breakpoints" as bp;
+.page {
+  padding: 0;
+  width: 100%;
+  height: 100dvh;
+  margin: 0 auto;
+  overflow-y: scroll;
+
+  position: relative;
+  z-index: 100;
+  padding-top: var(--space-6);
+  @include bp.respond-to(md) {
+    width: calc(95% - 50px);
+    margin-left: 60px;
+}
+}   

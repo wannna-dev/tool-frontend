@@ -26,6 +26,13 @@
 
     &__content {
       &__form {
+        &__settings {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          gap: var(--space-4);
+          margin-bottom: var(--space-4);
+        }
         &__form {
           display: flex;
           flex-direction: column;

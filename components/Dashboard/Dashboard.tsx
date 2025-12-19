@@ -9,6 +9,7 @@ import Perfil from "./Perfil/Perfil";
 import Chat from "./Chat/Chat";
 import Comunidad from "./Comunidad/Comunidad";
 import NewPost from "./NewPost/NewPost";
+import PostPage from "./PostPage/PostPage";
 
 // components
 import SidebarLeft from "@/components/SidebarLeft/SidebarLeft";
@@ -23,11 +24,12 @@ import { UserType } from "@/types/user";
 interface DashboardProps {
   userLogged?: UserType; // Your custom user profile from database
   usernameProfile?: string;
-  pageType?: "muro" | "perfil" | "chat" | "post" | "comunidad";
+  pageType?: "muro" | "perfil" | "chat" | "post" | "comunidad" | "postpage";
   communityId?: string;
+  postId?: string;
 }
 
-const Dashboard = ({ userLogged, usernameProfile, pageType, communityId }: DashboardProps) => {
+const Dashboard = ({ userLogged, usernameProfile, pageType, communityId, postId }: DashboardProps) => {
   const {
     screen,
     setScreen,
@@ -60,6 +62,7 @@ const Dashboard = ({ userLogged, usernameProfile, pageType, communityId }: Dashb
       {screen === "chat" && <Chat />}
       {screen === "post" && <NewPost />}
       {screen === "comunidad" && <Comunidad communityId={communityId} />}
+      {screen === "postpage" && <PostPage postId={postId || ""} />}
       <SidebarRight />
 
       <PublishContent />
