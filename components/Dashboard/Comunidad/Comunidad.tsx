@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import Image from "next/image";
 import { NoteType } from "@/types/note";
 import { QuestionType } from "@/types/question";
+import NoteCard from "../Muro/NoteCard/NoteCard";
 
 const Comunidad = ({ communityId }: { communityId?: string }) => {
     const [community, setCommunity] = useState<CommunityType | null>(null);
@@ -26,9 +27,11 @@ const Comunidad = ({ communityId }: { communityId?: string }) => {
           <div className={styles.comunidades__container}>
             
             <div className={styles.comunidades__container__header}>
-              <Image className={styles.comunidades__container__header__image} src={community?.image || ""} alt={community?.name || ""} width={200} height={200} />
-              <h1 className={styles.comunidades__container__header__name}>{community?.name}</h1>
-              <p className={styles.comunidades__container__header__description}>{community?.description}</p>
+              <Image className={styles.comunidades__container__header__image} src={community?.image || ""} alt={community?.name || ""} width={100} height={100} />
+              <div className={styles.comunidades__container__header__content}>
+                <p className={styles.comunidades__container__header__content__name}>{community?.name}</p>
+                <p className={styles.comunidades__container__header__content__description}>{community?.description}</p>
+              </div>
             </div>
 
             <div className={styles.comunidades__container__content}>

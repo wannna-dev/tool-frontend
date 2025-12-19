@@ -11,7 +11,7 @@
 
         &__header {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
             gap: var(--space-4);
             margin-bottom: var(--space-8);
@@ -22,17 +22,22 @@
                 object-position: center;
             }
 
-            &__name {
-                font-size: var(--font-size-2xl);
-                font-weight: 600;
-                text-align: center;
+            &__content {
+                display: flex;
+                flex-direction: column;
+                gap: var(--space-2);
+
+                &__name {
+                    font-size: var(--font-size-xl);
+                    font-weight: 600;
+                }
+    
+                &__description {
+                    font-size: var(--font-size-sm);
+                    color: var(--color-gray-dark);
+                }
             }
 
-            &__description {
-                font-size: var(--font-size-md);
-                color: var(--color-gray-dark);
-                text-align: center;
-            }
         }
 
         &__content {

@@ -9,6 +9,15 @@ import CarouselTopics from "./CarouselTopics/CarouselTopics";
 import { getFeed } from "@/lib/feed-actions";
 import { FeedItemType } from "@/types/feed";
 
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+
+// Import required modules
+import { Mousewheel, Keyboard } from 'swiper/modules';
+
 const Muro = () => {
     const [feedItems, setFeedItems] = useState<FeedItemType[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -28,54 +37,61 @@ const Muro = () => {
         fetchFeed();
     }, []);
 
-    // TypeScript will narrow the type automatically based on item.type
     const renderFeedItem = (item: FeedItemType) => {
         switch (item.type) {
             case 'post':
-                // TypeScript knows item is PostType here
                 return <PostCard post={item} />;
             
             case 'note':
-                // TypeScript knows item is NoteType here
                 return <NoteCard note={item} />;
 
             case 'question':
-                // TypeScript knows item is QuestionType here
                 return <QuestionCard question={item} />;
 
             default:
-                // TypeScript will error if you forget a case
                 return null;
         }
     };
 
     return (
         <div className={styles.muro}>
-            <div className={styles.muro__container}>
-                {/* <div className={styles.muro__carouselTopics}>
-                    <CarouselTopics />
-                </div> */}
+            <div className={styles.muro__header}>
+                <CarouselTopics />
+            </div>
 
-                <div className={styles.muro__content}>
-                    <div className={styles.muro__content__posts}>
-                        <p className={styles.muro__content__title}>Historias recientes</p>
-                        
-                        {isLoading && <p>Cargando...</p>}
-                        
-                        {!isLoading && feedItems.length === 0 && (
-                            <p>No hay contenido disponible</p>
-                        )}
-                        
-                        {feedItems.length > 0 && feedItems.map((item, index) => (
-                            <div key={`${item.type}-${item.id}`}>
-                                {index > 0 && (
-                                    <div className={styles.muro__content__posts__divider}></div>
-                                )}
-                                {renderFeedItem(item)}
-                            </div>
-                        ))}
+            <div className={styles.muro__container}>
+                {isLoading && (
+                    <div className={styles.muro__loading}>
+                        <p>Cargando...</p>
                     </div>
-                </div>
+                )}
+                
+                {!isLoading && feedItems.length === 0 && (
+                    <div className={styles.muro__empty}>
+                        <p>No hay contenido disponible</p>
+                    </div>
+                )}
+                
+                {!isLoading && feedItems.length > 0 && (
+                    <Swiper
+                        direction="vertical"
+                        slidesPerView={1}
+                        mousewheel={true}
+                        keyboard={{
+                            enabled: true,
+                        }}
+                        modules={[Mousewheel, Keyboard]}
+                        className={styles.muro__swiper}
+                    >
+                        {feedItems.map((item) => (
+                            <SwiperSlide key={`${item.type}-${item.id}`}>
+                                <div className={styles.muro__slide}>
+                                    {renderFeedItem(item)}
+                                </div>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+                )}
             </div>
         </div>
     );

@@ -17,7 +17,16 @@ export async function getCommunity(communityId: string) {
       notes (
         id,
         content,
-        created_at
+        created_at,
+        profiles (
+          id,
+          username,
+          picture
+        ),
+        note_likes (
+          user_id,
+          reaction_type
+        )
       ),
       questions (
         id,

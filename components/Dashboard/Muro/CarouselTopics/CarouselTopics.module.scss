@@ -1,32 +1,40 @@
 .carousel {
+  position: fixed;
+  z-index: 100;
+  background-color: rgb(from var(--color-gray-light) r g b / 0);
   margin-bottom: var(--space-4);
-
+  padding: var(--space-4) var(--space-6) !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
   &__swiper {
     width: 100%;
     height: 100%;
+    padding: 0 var(--space-6) !important;
+    padding-right: var(--space-20) !important;
     
     &__slide {
-      width: 25% !important;
-      height: auto;
-      aspect-ratio: var(--aspect-ratio-small);
+      width: fit-content !important;
+      height: 44px !important;
       border-radius: var(--border-radius-small);
       //background-color: var(--color-gray-light);
       background-color: rgb(from var(--color-gray-light) r g b / 1);
-      padding: var(--space-5);
+      padding: var(--space-2) var(--space-4);
+      transition: all 0.3s ease;
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--color-gray-light-hover);
+      }
 
       &__content {
         width: 100%;
         height: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-      }
-
-
-      &__text {
-        font-size: var(--font-size-3xl);
-        line-height: var(--line-height-small);
-        font-weight: 800;
+        justify-content: center;
+        align-items: center;
       }
     }
 

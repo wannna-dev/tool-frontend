@@ -4,19 +4,22 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/css';
 
 const TOPICS = [
-  /* { id: 0, name: "Help me!", likes: '1K', color: 'var(--color-black)' }, */
-  { id: 1, name: "Me ha tocado", likes: '1K', color: 'var(--color-resuena)' },
-  { id: 2, name: "Sin postureo", likes: '932', color: 'var(--color-enseno)' },
-  { id: 3, name: "Esto es útil", likes: '824', color: 'var(--color-emociona)' },
-  { id: 4, name: "Freeeesh", likes: '234', color: 'var(--color-alegra)' },
+  { id: 1, name: "Ansiedad silenciosa", likes: '1K', color: 'var(--color-black)' },
+  { id: 2, name: "Maternidad", likes: '932', color: 'var(--color-black)' },
+  { id: 3, name: "Amor no correspondido", likes: '824', color: 'var(--color-black)' },
+  { id: 4, name: "Trauma", likes: '234', color: 'var(--color-black)' },
+  { id: 5, name: "Perder a un ser querido", likes: '234', color: 'var(--color-black)' },
+  { id: 6, name: "Viajes", likes: '234', color: 'var(--color-black)' },
+  { id: 6, name: "No llegar a fin de mes", likes: '234', color: 'var(--color-black)' },
 ]
 
 const CarouselTopics = () => {
   return (
     <div className={styles.carousel}>
+      <p className={styles.carousel__title}>Filtros:</p>
       <Swiper
         className={styles.carousel__swiper}
-        spaceBetween={10}
+        spaceBetween={30}
         slidesPerView="auto"
         /* breakpoints={{ 768: { slidesPerView: 2 } }} */
       >
@@ -24,7 +27,6 @@ const CarouselTopics = () => {
           <SwiperSlide key={topic.id} className={styles.carousel__swiper__slide}>
             <div className={styles.carousel__swiper__slide__content}>
               <p className={styles.carousel__swiper__slide__text} style={{ color: topic.color }}>{topic.name}</p>
-              <p className={styles.carousel__swiper__slide__content__likes}>{topic.likes}</p>
             </div>
           </SwiperSlide>
         ))}

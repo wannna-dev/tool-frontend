@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import { createPost } from "@/lib/post-actions";
 import { useAppContext } from "@/context/AppContext";
 import Image from "next/image";
+import Tiptap from "@/components/Tiptap/Tiptap";
 
 const NewPost = () => {
 
@@ -137,13 +138,15 @@ const NewPost = () => {
                 />
                 
                 {/* Content */}
-                <textarea
+                {/* <textarea
                   className={styles.newpost__container__content__form__form__content__textarea}
                   placeholder="Empieza a escribir tu post..."
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   rows={20}
-                />
+                /> */}
+
+                <Tiptap setContent={setContent} />
               </div>
 
 

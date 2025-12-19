@@ -115,14 +115,12 @@ const PostCard = ({ post }: { post: PostType & { profiles: ProfileType, totalRea
           )}
           {post.description && (
             <p className={styles.postCard__content__description}>
-              {post.description.split(' ').length > 35 ? (
-                <>
-                  {post.description.split(' ').slice(0, 35).join(' ')}... 
-                  <span className={styles.postCard__content__description__more}> Más</span>
-                </>
-              ) : (
-                post.description
-              )}
+              <div dangerouslySetInnerHTML={{ 
+                __html: post.description.length > 200 
+                  ? post.description.slice(0, 200) + '... <span class="' + styles.postCard__content__description__more + '">Más</span>'
+                  : post.description 
+              }} />
+
             </p>
           )}
           {post.image && (
