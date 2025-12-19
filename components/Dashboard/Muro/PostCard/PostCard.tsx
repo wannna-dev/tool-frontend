@@ -116,8 +116,8 @@ const PostCard = ({ post }: { post: PostType & { profiles: ProfileType, totalRea
           {post.description && (
             <p className={styles.postCard__content__description}>
               <div dangerouslySetInnerHTML={{ 
-                __html: post.description.length > 200 
-                  ? post.description.slice(0, 200) + '... <span class="' + styles.postCard__content__description__more + '">Más</span>'
+                __html: post.description.length > 100 
+                  ? post.description.slice(0, 100) + '... <span class="' + styles.postCard__content__description__more + '">Más</span>'
                   : post.description 
               }} />
 

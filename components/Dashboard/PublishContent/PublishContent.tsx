@@ -50,7 +50,7 @@ const PublishContent = () => {
     <>
       <div className={styles.publish} ref={publishRef}>
         <button className={styles.publish__button} id="publish-content-button" onClick={() => setIsOpen(!isOpen)}>
-          Publicar
+          <p>Publicar</p>
           <Image src="/svg/plus-white.svg" alt="plus" width={12} height={12} />
         </button>
 

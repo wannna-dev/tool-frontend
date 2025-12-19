@@ -29,10 +29,16 @@
 
     &__header {
         margin-bottom: var(--space-10);
+        @include bp.respond-to(md) {
+            margin-bottom: var(--space-5);
+        }
         &__title {
             font-size: var(--font-size-2xl);
             font-family: var(--font-diatype-bold-trial);
             text-align: center;
+            @include bp.respond-to(md) {
+                font-size: var(--font-size-xl);
+            }
         }
     }
 

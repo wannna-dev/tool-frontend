@@ -1,3 +1,4 @@
+@use "@/app/_breakpoints" as bp;
 .reactionPicker {
   position: relative;
 
@@ -11,6 +12,9 @@
       align-items: center;
       gap: var(--space-1);
       height: 33px;
+      @include bp.respond-to(md) {
+        height: 20px;
+      }
 
       &__item {
         height: 100%;
@@ -24,6 +28,10 @@
           border-radius: var(--border-radius-super-small);
           min-height: 7px;
           transition: all 0.8s ease;
+          @include bp.respond-to(md) {
+            width: 5px;
+            min-height: 5px;
+          }
         }
       }
     }
@@ -47,6 +55,13 @@
     &:disabled {
       opacity: 0.6;
       cursor: not-allowed;
+    }
+
+    svg {
+      @include bp.respond-to(md) {
+        width: 25px;
+        height: 25px;
+      }
     }
 
     &[data-reacted="true"] {

@@ -41,6 +41,7 @@
             border-radius: var(--border-radius);
             padding: var(--space-2) 0;
             transition: all 0.3s ease;
+
             &:hover {
                 padding: var(--space-2) var(--space-4);
                 background-color: var(--color-white);
@@ -49,6 +50,12 @@
             @include bp.respond-to(md) {
                 flex-direction: column;
                 align-items: flex-start;
+            }
+
+            p {
+                @include bp.respond-to(md) {
+                    font-size: var(--font-size-sm);
+                }
             }
         }
 
@@ -60,11 +67,18 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            @include bp.respond-to(md) {
+                width: 30px;
+                height: 30px;
+            }
         }
 
         &__createdAt {
             font-size: var(--font-size-sm);
             color: var(--color-gray-dark);
+            @include bp.respond-to(md) {
+                font-size: var(--font-size-xs);
+            }
         }
 
         &__actions {
@@ -106,11 +120,18 @@
         &__title {
             font-size: var(--font-size-2xl);
             font-family: var(--font-diatype-bold-trial);
+            @include bp.respond-to(md) {
+                font-size: var(--font-size-xl);
+            }
         }
 
         &__description {
-            font-size: var(--font-size-md);
-
+            * {
+                font-size: var(--font-size-md);
+                @include bp.respond-to(md) {
+                    font-size: var(--font-size-sm);
+                }
+            }
             &__more {
                 color: var(--color-main);
                 cursor: pointer;
@@ -118,6 +139,10 @@
         }
 
         &__image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
             &__img {
                 width: 100%;
                 height: auto;
@@ -125,6 +150,11 @@
                 object-fit: cover;
                 object-position: center;
                 border-radius: var(--border-radius-small);
+
+                @include bp.respond-to(md) {
+                    width: 70%;
+                    margin: 0 auto;
+                }
             }
         }
     }

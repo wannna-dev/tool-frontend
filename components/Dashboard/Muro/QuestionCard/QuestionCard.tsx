@@ -149,11 +149,11 @@ const QuestionCard = ({ question }: { question: QuestionType }) => {
                         </p>
                     )}
                     {question.context && (
-                        <p className={styles.postCard__content__description}>
+                        <p className={styles.questionCard__content__description}>
                             {question.context.split(' ').length > 35 ? (
                                 <>
                                     {question.context.split(' ').slice(0, 35).join(' ')}... 
-                                    <span className={styles.postCard__content__description__more}> Más</span>
+                                    <span className={styles.questionCard__content__description__more}> Más</span>
                                 </>
                             ) : (
                                 question.context

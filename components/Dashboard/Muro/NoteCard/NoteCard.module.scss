@@ -62,6 +62,9 @@
                 &__name {
                     &__community {
                         font-size: var(--font-size-xl);
+                        @include bp.respond-to(md) {
+                            font-size: var(--font-size-lg);
+                        }
                     }
                 }
             }
@@ -75,11 +78,18 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            @include bp.respond-to(md) {
+                width: 30px;
+                height: 30px;
+            }
         }
 
         &__createdAt {
             font-size: var(--font-size-sm);
             color: var(--color-gray-dark);
+            @include bp.respond-to(md) {
+                font-size: var(--font-size-xs);
+            }
         }
 
         &__actions {
@@ -121,6 +131,9 @@
         &__text {
             font-size: var(--font-size-2xl);
             font-family: var(--font-diatype-bold-trial);
+            @include bp.respond-to(md) {
+                font-size: var(--font-size-xl);
+            }
         }
 
         &__image {
