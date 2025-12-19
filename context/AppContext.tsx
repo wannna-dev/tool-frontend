@@ -36,7 +36,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     
     // sidebars states
     const [isSidebarRightOpen, setIsSidebarRightOpen] = useState(false);
-    const [isSidebarLeftOpen, setIsSidebarLeftOpen] = useState(true);
+    const [isSidebarLeftOpen, setIsSidebarLeftOpen] = useState(false);
     const [usernameProfile, setUsernameProfile] = useState<string>("");
     const [user, setUser] = useState<UserType | null>(null);
     const [token, setToken] = useState<string | null>(null);
@@ -46,6 +46,22 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         type: "success",
     });
     const [mood, setMood] = useState<MoodType>("resueno");
+
+    // Set initial sidebar state based on screen size
+    useEffect(() => {
+        const checkScreenSize = () => {
+            const isDesktop = window.innerWidth >= 1024; // Adjust breakpoint as needed
+            setIsSidebarLeftOpen(isDesktop);
+        };
+
+        // Check on mount
+        checkScreenSize();
+
+        // Optional: Update on window resize
+        window.addEventListener('resize', checkScreenSize);
+        return () => window.removeEventListener('resize', checkScreenSize);
+    }, []);
+
     return (
         <AppContext.Provider value={{
             screen,

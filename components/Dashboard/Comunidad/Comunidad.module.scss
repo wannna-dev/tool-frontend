@@ -1,8 +1,14 @@
+@use "@/app/_breakpoints" as bp;
 .comunidades {
     margin: 0 auto;    
     padding: var(--space-12) 0;
     width: 100%;
     overflow-y: scroll;
+
+    @include bp.respond-to(md) {
+        width: calc(95% - 50px);
+        margin-left: 60px;
+    }
     
     &__container {
         width: 95%;

@@ -152,7 +152,7 @@ const SidebarLeft = () => {
           />
         </div>
 
-        <Communities />
+        <Communities isCollapsed={!isSidebarLeftOpen} />
       </div>
 
       {/* Footer */}

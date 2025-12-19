@@ -10,7 +10,7 @@ const TOPICS = [
   { id: 4, name: "Trauma", likes: '234', color: 'var(--color-black)' },
   { id: 5, name: "Perder a un ser querido", likes: '234', color: 'var(--color-black)' },
   { id: 6, name: "Viajes", likes: '234', color: 'var(--color-black)' },
-  { id: 6, name: "No llegar a fin de mes", likes: '234', color: 'var(--color-black)' },
+  { id: 7, name: "No llegar a fin de mes", likes: '234', color: 'var(--color-black)' },
 ]
 
 const CarouselTopics = () => {

@@ -1,3 +1,4 @@
+@use "@/app/_breakpoints" as bp;
 .sidebar {
     width: 283px;
     height: 100vh;
@@ -10,6 +11,12 @@
 
     position: relative;
     z-index: 100;
+
+    @include bp.respond-to(md) {
+        position: fixed;
+        background-color: var(--color-white);
+        z-index: 1000;
+    }
 
     &__collapse {
         width: 52px;

@@ -1,3 +1,4 @@
+@use "@/app/_breakpoints" as bp;
 .edit {
   position: fixed;
   top: 0;
@@ -32,6 +33,11 @@
 
     &::-webkit-scrollbar {
       display: none;
+    }
+
+    @include bp.respond-to(md) {
+      width: 90%;
+      max-width: none;
     }
 
     &__header {
