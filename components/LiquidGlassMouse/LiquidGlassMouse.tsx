@@ -43,7 +43,7 @@ export const GlassElement = ({
       // Set timer to detect stop
       timeoutRef.current = setTimeout(() => {
         setIsMoving(false);
-      }, 10); // 150ms after last move, considered stopped
+      }, 150); // 150ms after last move, considered stopped
     };
 
     window.addEventListener("mousemove", handleMove);
