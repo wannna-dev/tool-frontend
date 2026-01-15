@@ -17,6 +17,7 @@ import SidebarRight from "@/components/SidebarRight/SidebarRight";
 import PublishContent from "./PublishContent/PublishContent";
 import Toast from "./Toast/Toast";
 import BgGradient from "./BgGradient/BgGradient";
+import { GlassElement } from "@/components/LiquidGlassMouse/LiquidGlassMouse";
 
 // types
 import { UserType } from "@/types/user";
@@ -57,6 +58,15 @@ const Dashboard = ({ userLogged, usernameProfile, pageType, communityId, postId 
     <main className={styles.dashboard}>
       <BgGradient />
       <SidebarLeft />
+      <GlassElement
+        width={100}
+        height={100}
+        radius={100}
+        depth={10}
+        blur={1}
+        chromaticAberration={0}
+        debug={false}
+      />
       {screen === "muro" && <Muro />}
       {screen === "perfil" && <Perfil usernameProfile={usernameProfile} />}
       {screen === "chat" && <Chat />}
